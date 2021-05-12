@@ -28,7 +28,7 @@ resource "oci_core_subnet" "curriki_subnet" {
   display_name               = var.subnet_display_name
   dns_label                  = substr(var.subnet_dns_label, 0, 15)
   prohibit_public_ip_on_vnic = ! local.is_public_subnet
-  security_list_ids = [ oci_core_security_list.curriki_security_list.id]
+  # security_list_ids = [ oci_core_security_list.curriki_security_list.id]
 
   freeform_tags = map(var.tag_key_name, var.tag_value)
 }
@@ -139,7 +139,7 @@ resource "oci_core_subnet" "curriki_es_subnet" {
     display_name               = "${var.subnet_display_name}-es"
     dns_label                  = "${substr(var.subnet_dns_label, 0, 13)}es"
     prohibit_public_ip_on_vnic = ! local.is_public_subnet
-    security_list_ids = [ oci_core_security_list.curriki_db_security_list.id]
+    # security_list_ids = [ oci_core_security_list.curriki_db_security_list.id]
 
     freeform_tags = map(var.tag_key_name, var.tag_value)
 }

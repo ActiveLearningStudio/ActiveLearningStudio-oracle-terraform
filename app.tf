@@ -181,6 +181,7 @@ resource "oci_core_instance" "oracle_instance" {
         assign_public_ip = false
         display_name = "studiovnic"
         subnet_id = local.use_existing_network ? var.subnet_id : oci_core_subnet.curriki_subnet[0].id
+        nsg_ids                = [oci_core_network_security_group.simple_nsg.id]
     }
     extended_metadata = {
       ssh_authorized_keys = tls_private_key.public_private_key_pair.public_key_openssh

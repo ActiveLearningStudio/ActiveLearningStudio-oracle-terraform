@@ -9,6 +9,7 @@ resource "oci_core_network_security_group" "simple_nsg" {
   freeform_tags = map(var.tag_key_name, var.tag_value)
 }
 
+
 # Allow Egress traffic to all networks
 resource "oci_core_network_security_group_security_rule" "simple_rule_egress" {
   network_security_group_id = oci_core_network_security_group.simple_nsg.id
@@ -67,6 +68,23 @@ resource "oci_core_network_security_group_security_rule" "simple_rule_http_ingre
   }
 }
 
+# Allow (TCP port 4003) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "simple_rule_4003_ingress" {
+  network_security_group_id = oci_core_network_security_group.simple_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = "4003"
+      max = "4003"
+    }
+  }
+}
+
+
 # Allow ANY Ingress traffic from within simple vcn
 resource "oci_core_network_security_group_security_rule" "simple_rule_all_simple_vcn_ingress" {
   network_security_group_id = oci_core_network_security_group.simple_nsg.id
@@ -75,3 +93,175 @@ resource "oci_core_network_security_group_security_rule" "simple_rule_all_simple
   source                    = var.vcn_cidr_block
   stateless                 = false
 }
+
+resource "oci_core_network_security_group" "es_nsg" {
+  #Required
+  compartment_id = var.compartment_ocid
+  vcn_id         = local.use_existing_network ? var.vcn_id : oci_core_vcn.curriki_vcn.0.id
+
+  #Optional
+  display_name = "${var.nsg_display_name}-es"
+
+  freeform_tags = map(var.tag_key_name, var.tag_value)
+}
+
+
+
+# Allow Egress traffic to all networks
+resource "oci_core_network_security_group_security_rule" "es_rule_egress" {
+  network_security_group_id = oci_core_network_security_group.es_nsg.id
+
+  direction   = "EGRESS"
+  protocol    = "all"
+  destination = "0.0.0.0/0"
+
+}
+
+# Allow SSH (TCP port 22) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "es_rule_ssh_ingress" {
+  network_security_group_id = oci_core_network_security_group.es_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = var.nsg_ssh_port
+      max = var.nsg_ssh_port
+    }
+  }
+}
+
+
+# Allow (TCP port 9200) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "es_rule_9200_ingress" {
+  network_security_group_id = oci_core_network_security_group.es_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = "9200"
+      max = "9200"
+    }
+  }
+}
+
+
+
+
+
+resource "oci_core_network_security_group" "db_nsg" {
+  #Required
+  compartment_id = var.compartment_ocid
+  vcn_id         = local.use_existing_network ? var.vcn_id : oci_core_vcn.curriki_vcn.0.id
+
+  #Optional
+  display_name = "${var.nsg_display_name}-db"
+
+  freeform_tags = map(var.tag_key_name, var.tag_value)
+}
+
+
+
+# Allow Egress traffic to all networks
+resource "oci_core_network_security_group_security_rule" "db_rule_egress" {
+  network_security_group_id = oci_core_network_security_group.db_nsg.id
+
+  direction   = "EGRESS"
+  protocol    = "all"
+  destination = "0.0.0.0/0"
+
+}
+
+# Allow SSH (TCP port 22) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "db_rule_ssh_ingress" {
+  network_security_group_id = oci_core_network_security_group.db_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = var.nsg_ssh_port
+      max = var.nsg_ssh_port
+    }
+  }
+}
+
+
+# Allow (TCP port 9200) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "db_rule_postgres_ingress" {
+  network_security_group_id = oci_core_network_security_group.db_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = var.postges_exposed_port
+      max = var.postges_exposed_port
+    }
+  }
+}
+
+
+# Allow (TCP port 9200) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "db_rule_pgadmin_ingress" {
+  network_security_group_id = oci_core_network_security_group.db_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = var.pgadmin_exposed_port
+      max = var.pgadmin_exposed_port
+    }
+  }
+}
+
+
+# Allow (TCP port 9200) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "db_rule_phpmyadmin_ingress" {
+  network_security_group_id = oci_core_network_security_group.db_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = var.phpmyadmin_exposed_port
+      max = var.phpmyadmin_exposed_port
+    }
+  }
+}
+
+# Allow (TCP port 9200) Ingress traffic from any network
+resource "oci_core_network_security_group_security_rule" "db_rule_mysql_ingress" {
+  network_security_group_id = oci_core_network_security_group.db_nsg.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = var.nsg_source_cidr
+  stateless                 = false
+
+  tcp_options {
+    destination_port_range {
+      min = var.mysql_local_port
+      max = var.mysql_local_port
+    }
+  }
+}
+
+
+
+
+
+
