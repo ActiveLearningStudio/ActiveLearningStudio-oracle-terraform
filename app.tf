@@ -163,7 +163,7 @@ resource "oci_core_instance" "oracle_instance" {
     compartment_id = var.compartment_ocid
     shape = "VM.Standard.E4.Flex"
     source_details {
-        source_id = "ocid1.image.oc1.iad.aaaaaaaagmhnohyvb2ipl4gv5b673wcw4qnoyssphvej4n2xbcsmp2okpslq" # CurrikiAPPwithoutHTTPS
+        source_id = "ocid1.image.oc1.iad.aaaaaaaarhrgr4un3tbeakeo4hbcgvamoqwg5y4uirabvfc3trd7xxankxga" # CurrikiAPPwithoutHTTPS
         # source_id = "ocid1.image.oc1.iad.aaaaaaaamkzk5ldaouovz42drxqxjoiqu4i3hrnw6hlepp4yyhyjrjsitnza" # Old Image
         source_type = "image"
     }
@@ -224,11 +224,11 @@ resource "oci_core_volume" "app_volume" {
     size_in_gbs = 500
     display_name = "Studio-App-Storage-Vol-Latest"
 
-    source_details {
-        #Required
-        id = "ocid1.volume.oc1.iad.abuwcljtl6logc3nrsd77sai2t2srfcgarh3kfdma2epbdxbxp5agsh6veea"
-        type = "volume"
-    }
+    # source_details {
+    #     #Required
+    #     id = "ocid1.volume.oc1.iad.abuwcljtl6logc3nrsd77sai2t2srfcgarh3kfdma2epbdxbxp5agsh6veea"
+    #     type = "volume"
+    # }
 }
 
 
@@ -287,8 +287,8 @@ resource "oci_core_volume_attachment" "app_volume_attachment" {
       "export UUID=$(sudo /usr/sbin/blkid -s UUID -o value /dev/disk/by-path/$${DEVICE_ID}-part1)",
       "echo 'UUID='$${UUID}' /home/opc/curriki/api/storage xfs defaults,_netdev,nofail 0 2' | sudo tee -a /etc/fstab",
       "sudo mount -a",
-    #   "sudo unzip -o /home/opc/curriki/storage.zip -d /home/opc/curriki/api/storage/",
-    #   "sudo chmod 777 -R /home/opc/curriki/api/storage/"
+      "sudo unzip -o /home/opc/curriki/storage.zip -d /home/opc/curriki/api/storage/",
+      "sudo chmod 777 -R /home/opc/curriki/api/storage/"
     ]
   }
   # unmount and disconnect on destroy
