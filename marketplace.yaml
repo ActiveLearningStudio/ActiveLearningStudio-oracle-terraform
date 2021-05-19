@@ -71,9 +71,13 @@ variableGroups:
     variables:
       - subnet_type
       - subnet_id
+      - db_subnet_id
+      - es_subnet_id
       - subnet_display_name
       - subnet_dns_label
       - subnet_cidr_block
+      - db_subnet_cidr_block
+      - es_subnet_cidr_block
       - nsg_configuration_strategy
 
   - title: "Network Security Group"
@@ -370,6 +374,33 @@ variables:
     default: ''
     required: true
     title: Existing Subnet
+    description: An existing Management subnet. This subnet must already be present in the chosen VCN.
+  db_subnet_id:
+    visible: #($network_strategy  == "Use Existing VCN and Subnet")
+      eq:
+        - network_strategy
+        - "Use Existing VCN and Subnet"
+    type: oci:core:subnet:id
+    dependsOn:
+      vcnId: vcn_id
+      compartmentId: compartment_ocid
+    default: ''
+    required: true
+    title: DB Existing Subnet
+    description: An existing Management subnet. This subnet must already be present in the chosen VCN.
+
+  es_subnet_id:
+    visible: #($network_strategy  == "Use Existing VCN and Subnet")
+      eq:
+        - network_strategy
+        - "Use Existing VCN and Subnet"
+    type: oci:core:subnet:id
+    dependsOn:
+      vcnId: vcn_id
+      compartmentId: compartment_ocid
+    default: ''
+    required: true
+    title: Elastic Existing Subnet
     description: An existing Management subnet. This subnet must already be present in the chosen VCN.
 
   subnet_dns_label:

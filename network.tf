@@ -64,7 +64,7 @@ resource "oci_core_subnet" "curriki_db_subnet" {
     display_name               = "${var.subnet_display_name}-db"
     dns_label                  = "${substr(var.subnet_dns_label, 0, 13)}db"
     prohibit_public_ip_on_vnic = ! local.is_public_subnet
-    security_list_ids = [ oci_core_security_list.curriki_db_security_list.id]
+    # security_list_ids = [ oci_core_security_list.curriki_db_security_list.id]
 
     freeform_tags = map(var.tag_key_name, var.tag_value)
 }

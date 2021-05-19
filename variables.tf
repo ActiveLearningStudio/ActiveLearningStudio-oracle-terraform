@@ -268,22 +268,22 @@ variable "terraform_trax_site" {
 variable "http_scheme" {
   description = "http_scheme"
   type = string
-  default = "http"
+  default = "https"
 }
 variable "instance_display_name" {
   description = "instance_display_name"
   type = string
-  default = "Curriki App"
+  default = "Curriki App Instance"
 }
 variable "db_instance_display_name" {
   description = "db_instance_display_name"
   type = string
-  default = "Curriki DB"
+  default = "Curriki DB Instance"
 }
 variable "elastic_instance_name" {
   description = "elastic_instance_name"
   type = string
-  default = "Curriki Elastic"
+  default = "Curriki Elastic Instance"
 }
 variable "mysql_database" {
   description = "mysql_database"
@@ -405,15 +405,6 @@ variable "es_instance_display_name" {
   type = string
   default = "es-instance"
 }
-
-
-variable "curriki_app_key" {
-  description = "curriki_app_key"
-  type = string
-  default = "currikidb"
-}
-
-
 
 variable "mail_username" {
   description = "mail_username"

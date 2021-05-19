@@ -1,159 +1,60 @@
-# resource "oci_core_vcn" "curriki_vcn" {
-# 	compartment_id = var.compartment_ocid
-# 	cidr_blocks = [ "10.0.0.0/16" ]
-# }
-
-# resource "oci_core_internet_gateway" "curriki_internet_gateway" {
-#     #Required
-#     compartment_id = var.compartment_ocid
-#     vcn_id = oci_core_vcn.curriki_vcn.id
-
-#     #Optional
-#     display_name = "curriki-internet-gateway"
-# }
-
-
-# resource "oci_core_route_table" "curriki_route_table" {
-#     #Required
-#     compartment_id = var.compartment_ocid
-#     vcn_id = oci_core_vcn.curriki_vcn.id
-
-#     #Optional
-    
-#     route_rules {
-#         #Required
-#         network_entity_id = oci_core_internet_gateway.curriki_internet_gateway.id
-
-#         #Optional
-#         cidr_block = "0.0.0.0/0"
-#         # description = var.route_table_route_rules_description
-#         # destination = var.route_table_route_rules_destination
-#         # destination_type = var.route_table_route_rules_destination_type
-#     }
-# }
-
-# resource "oci_core_route_table_attachment" "curriki_route_table_attachment" {
-#   #Required    
-#   subnet_id = oci_core_subnet.curriki_subnet.id
-#   route_table_id =oci_core_route_table.curriki_route_table.id
-# }
-
-# data "oci_identity_availability_domains" "curriki_availability_domains" {
-#     #Required
-#     compartment_id = var.tenancy_ocid
-# }
-
-
-
-
-
 resource "tls_private_key" "public_private_key_pair" {
   algorithm   = "RSA"
 }
   
-# resource "oci_core_instance" "TFInstance1" {
-#   availability_domain = data.oci_identity_availability_domains.curriki_availability_domains.availability_domains[0].name
-#   compartment_id      = "${var.compartment_ocid}"
-#   display_name        = "TFInstance"
-#   # hostname_label      = "instance3"
-#   shape               = "VM.Standard.E4.Flex"
-#   subnet_id           = "${oci_core_subnet.curriki_subnet.id}"
-  
-#   source_details {
-#     source_type = "image"
-#     source_id   = "ocid1.image.oc1.iad.aaaaaaaamkzk5ldaouovz42drxqxjoiqu4i3hrnw6hlepp4yyhyjrjsitnza"
-#   }
-  
-#   extended_metadata = {
-#     ssh_authorized_keys = "${tls_private_key.public_private_key_pair.public_key_openssh}"
-#   }
-#   shape_config {
-#         #Optional
-#         memory_in_gbs = "8"
-#         ocpus = "2"
+
+# resource "oci_core_security_list" "curriki_security_list" {
+#     #Required
+#     compartment_id = var.compartment_ocid
+#     vcn_id = local.use_existing_network ? var.vcn_id : oci_core_vcn.curriki_vcn.0.id
+
+#     #Optional
+#     display_name = "curriki-security-list"
+#     egress_security_rules {
+#         #Required
+#         destination = "0.0.0.0/0"
+#         protocol = "all"
+#     }
+#     ingress_security_rules {
+#         #Required
+#         protocol = "6"
+#         source = "0.0.0.0/0"
+
+#         tcp_options {
+#             max = "80"
+#             min = "80"
+#         }
+#     }
+#     ingress_security_rules {
+#         #Required
+#         protocol = "6"
+#         source = "0.0.0.0/0"
+#         tcp_options {
+#             max = "22"
+#             min = "22"
+#         }
+#     }
+#     #Redis
+#     ingress_security_rules {
+#         #Required
+#         protocol = "6"
+#         source = "0.0.0.0/0"
+#         tcp_options {
+#             max = "4003"
+#             min = "4003"
+#         }
+#     }
+#     ingress_security_rules {
+#         #Required
+#         protocol = "6"
+#         source = "0.0.0.0/0"
+#         tcp_options {
+#             max = "443"
+#             min = "443"
+#         }
 #     }
 # }
-  
-# resource "null_resource" "remote-exec" {
-#   depends_on = ["oci_core_instance.TFInstance1"]
-  
-#   provisioner "remote-exec" {
-#     connection {
-#       agent       = false
-#       timeout     = "30m"
-#       host        = "${oci_core_instance.TFInstance1.public_ip}"
-#       user        = "opc"
-#       private_key = "${tls_private_key.public_private_key_pair.private_key_pem}"
-#     }
-  
-#     inline = [
-#       "touch ~/IMadeAFile.Right.Here"
-#     ]
-#   }
-# }
 
-
-
-
-resource "oci_core_security_list" "curriki_security_list" {
-    #Required
-    compartment_id = var.compartment_ocid
-    vcn_id = local.use_existing_network ? var.vcn_id : oci_core_vcn.curriki_vcn.0.id
-
-    #Optional
-    display_name = "curriki-security-list"
-    egress_security_rules {
-        #Required
-        destination = "0.0.0.0/0"
-        protocol = "all"
-    }
-    ingress_security_rules {
-        #Required
-        protocol = "6"
-        source = "0.0.0.0/0"
-
-        tcp_options {
-            max = "80"
-            min = "80"
-        }
-    }
-    ingress_security_rules {
-        #Required
-        protocol = "6"
-        source = "0.0.0.0/0"
-        tcp_options {
-            max = "22"
-            min = "22"
-        }
-    }
-    #Redis
-    ingress_security_rules {
-        #Required
-        protocol = "6"
-        source = "0.0.0.0/0"
-        tcp_options {
-            max = "4003"
-            min = "4003"
-        }
-    }
-    ingress_security_rules {
-        #Required
-        protocol = "6"
-        source = "0.0.0.0/0"
-        tcp_options {
-            max = "443"
-            min = "443"
-        }
-    }
-}
-
-# resource "oci_core_subnet" "curriki_subnet" {
-#     cidr_block = "10.0.0.0/24"
-#     compartment_id = var.compartment_ocid //ocid
-#     vcn_id = oci_core_vcn.curriki_vcn.id
-#     display_name = "currikisubnet"
-#     security_list_ids = [ oci_core_security_list.curriki_security_list.id]
-# }
 
 
 resource "oci_core_instance" "oracle_instance" {
@@ -161,17 +62,17 @@ resource "oci_core_instance" "oracle_instance" {
     availability_domain = local.availability_domain
     # availability_domain = data.oci_identity_availability_domains.curriki_availability_domains.availability_domains[0].name
     compartment_id = var.compartment_ocid
-    shape = "VM.Standard.E4.Flex"
+    shape = var.vm_compute_shape
     source_details {
-        source_id = "ocid1.image.oc1.iad.aaaaaaaarhrgr4un3tbeakeo4hbcgvamoqwg5y4uirabvfc3trd7xxankxga" # CurrikiAPPwithoutHTTPS
+        source_id = "ocid1.image.oc1.iad.aaaaaaaa6yq3ga3hj2cune4holkuqdz7seaogsueznj6rt3qo6p2i5iszp7a" # CurrikiAPPwithoutHTTPS
         # source_id = "ocid1.image.oc1.iad.aaaaaaaamkzk5ldaouovz42drxqxjoiqu4i3hrnw6hlepp4yyhyjrjsitnza" # Old Image
         source_type = "image"
     }
-    shape_config {
-
-        #Optional
-        memory_in_gbs = "16"
-        ocpus = "4"
+    dynamic "shape_config" {
+      for_each = local.is_flex_shape
+        content {
+          ocpus = shape_config.value
+        }
     }
     # public_ip = oci_core_public_ip.test_public_ip
 
@@ -283,12 +184,12 @@ resource "oci_core_volume_attachment" "app_volume_attachment" {
     inline = [
       "set -x",
       "export DEVICE_ID=ip-${self.ipv4}:${self.port}-iscsi-${self.iqn}-lun-2",
-      "sudo mkdir -p /home/opc/curriki/api/storage",
+      "sudo mkdir -p /curriki/api/storage",
       "export UUID=$(sudo /usr/sbin/blkid -s UUID -o value /dev/disk/by-path/$${DEVICE_ID}-part1)",
-      "echo 'UUID='$${UUID}' /home/opc/curriki/api/storage xfs defaults,_netdev,nofail 0 2' | sudo tee -a /etc/fstab",
+      "echo 'UUID='$${UUID}' /curriki/api/storage xfs defaults,_netdev,nofail 0 2' | sudo tee -a /etc/fstab",
       "sudo mount -a",
-      "sudo unzip -o /home/opc/curriki/storage.zip -d /home/opc/curriki/api/storage/",
-      "sudo chmod 777 -R /home/opc/curriki/api/storage/"
+      "sudo unzip -o /curriki/storage.zip -d /curriki/api/storage/",
+      "sudo chmod 777 -R /curriki/api/storage/"
     ]
   }
   # unmount and disconnect on destroy
@@ -299,7 +200,7 @@ resource "oci_core_volume_attachment" "app_volume_attachment" {
 #       "set -x",
 #       "export DEVICE_ID=ip-${self.ipv4}:${self.port}-iscsi-${self.iqn}-lun-1",
 #       "export UUID=$(sudo /usr/sbin/blkid -s UUID -o value /dev/disk/by-path/$${DEVICE_ID}-part1)",
-#       "sudo umount /home/opc/curriki/api/storage",
+#       "sudo umount /curriki/api/storage",
 #       "if [[ $UUID ]] ; then",
 #       "  sudo sed -i.bak '\\@^UUID='$${UUID}'@d' /etc/fstab",
 #       "fi",
@@ -315,44 +216,52 @@ resource "null_resource" "studio-script" {
      provisioner "remote-exec" {
          inline = [
              #Client
-            "sed -i \"s/terraform_site/${var.terraform_site}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/terraform_admin_site/${var.terraform_admin_site}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/terraform_tsugi_site/${var.terraform_tsugi_site}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/terraform_trax_site/${var.terraform_trax_site}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/http_scheme/${var.http_scheme}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/react_app_pexel_api/${var.react_app_pexel_api}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/react_app_google_captcha/${var.react_app_google_captcha}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/react_app_gapi_client_id/${var.react_app_gapi_client_id}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/react_app_hubpot/${var.react_app_hubpot}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/react_app_h5p_key/${var.react_app_h5p_key}/g\" ~/curriki/setup.sh",
-
-            "sed -i \"s/curriki_app_key/${var.curriki_app_key}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_db_port/${var.postges_exposed_port}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_db/${var.postgres_db}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_user/${var.postgres_user}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_password/${var.postgres_password}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_mail_username/${var.mail_username}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_mail_password/${var.mail_password}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_mail_from_address/${var.mail_from_address}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_gapi_credentials/${var.gapi_credentials}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_elastic_host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_elastic_user/${var.elastic_username}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_elastic_password/${var.elastic_password}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_lrs_username/${var.lrs_username}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_lrs_password/${var.lrs_password}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_lrs_db_database/${var.postgres_trax_db}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_port/${var.mysql_local_port}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_tsugi_db_dbname/${var.mysql_database}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_user/${var.mysql_user}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_password/${var.mysql_root_password}/g\" ~/curriki/setup.sh",
-            "sed -i \"s/curriki_tsugi_admin_password/${var.tsugi_admin_password}/g\" ~/curriki/setup.sh",
+            "sed -i \"s/terraform_site/${var.terraform_site}/g\" /curriki/setup.sh",
+            "sed -i \"s/terraform_admin_site/${var.terraform_admin_site}/g\" /curriki/setup.sh",
+            "sed -i \"s/terraform_tsugi_site/${var.terraform_tsugi_site}/g\" /curriki/setup.sh",
+            "sed -i \"s/terraform_trax_site/${var.terraform_trax_site}/g\" /curriki/setup.sh",
+            "sed -i \"s/http_scheme/${var.http_scheme}/g\" /curriki/setup.sh",
+            "sed -i \"s/react_app_pexel_api/${var.react_app_pexel_api}/g\" /curriki/setup.sh",
+            "sed -i \"s/react_app_google_captcha/${var.react_app_google_captcha}/g\" /curriki/setup.sh",
+            "sed -i \"s/react_app_gapi_client_id/${var.react_app_gapi_client_id}/g\" /curriki/setup.sh",
+            "sed -i \"s/react_app_hubpot/${var.react_app_hubpot}/g\" /curriki/setup.sh",
+            "sed -i \"s/react_app_h5p_key/${var.react_app_h5p_key}/g\" /curriki/setup.sh",
+            "echo $(tr -dc A-Za-z0-9 </dev/urandom | head -c 32 ; echo '' ) > /curriki/.appkey",
+            "sed -i \"s/curriki_app_key/$(cat /curriki/.appkey)/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_postgres_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_postgres_db_port/${var.postges_exposed_port}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_postgres_db/${var.postgres_db}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_postgres_user/${var.postgres_user}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_postgres_password/${var.postgres_password}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_mail_username/${var.mail_username}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_mail_password/${var.mail_password}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_mail_from_address/${var.mail_from_address}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_gapi_credentials/${var.gapi_credentials}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_elastic_host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_elastic_user/${var.elastic_username}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_elastic_password/${var.elastic_password}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_lrs_username/${var.lrs_username}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_lrs_password/${var.lrs_password}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_lrs_db_database/${var.postgres_trax_db}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_mysql_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_mysql_db_port/${var.mysql_local_port}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_tsugi_db_dbname/${var.mysql_database}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_mysql_db_user/${var.mysql_user}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_mysql_db_password/${var.mysql_root_password}/g\" /curriki/setup.sh",
+            "sed -i \"s/curriki_tsugi_admin_password/${var.tsugi_admin_password}/g\" /curriki/setup.sh",
             
             #Installing
-            "cd ~/curriki",
+            "cd /curriki",
             "sudo ./setup.sh",
-            "sudo docker stack deploy --compose-file /home/opc/curriki/docker-compose.yml currikistack"
+            "sudo docker stack deploy --compose-file /curriki/docker-compose.yml currikistack",
+            " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ')",
+            " while [ \"$up\" != \"1/1\" ] ",
+            " do ",
+            " echo $up ...",
+              " echo 'Please wait while we are installing the CurrikiStudio...' ",
+              " sleep 10 ",
+              " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ') ",
+            " done "
          ]
          connection {
              type = "ssh"
