@@ -164,7 +164,6 @@ resource "null_resource" "studio-script" {
             "sed -i \"s/terraform_admin_site/${var.terraform_admin_site}/g\" /curriki/setup.sh",
             "sed -i \"s/terraform_tsugi_site/${var.terraform_tsugi_site}/g\" /curriki/setup.sh",
             "sed -i \"s/terraform_trax_site/${var.terraform_trax_site}/g\" /curriki/setup.sh",
-            "sed -i \"s/http_scheme/${var.http_scheme}/g\" /curriki/setup.sh",
             "sed -i \"s/react_app_pexel_api/${var.react_app_pexel_api}/g\" /curriki/setup.sh",
             "sed -i \"s/react_app_google_captcha/${var.react_app_google_captcha}/g\" /curriki/setup.sh",
             "sed -i \"s/react_app_gapi_client_id/${var.react_app_gapi_client_id}/g\" /curriki/setup.sh",

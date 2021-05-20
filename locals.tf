@@ -13,14 +13,18 @@ locals {
   platform_image_id = data.oci_core_images.autonomous_ol7.images[0].id
 
   # Logic to choose a custom image or a marketplace image.
-  compute_image_id = var.mp_subscription_enabled ? var.mp_listing_resource_id : var.custom_image_id
+  app_custom_image_id = var.mp_subscription_enabled ? var.mp_listing_resource_app_id : var.app_custom_image_id
+  db_custom_image_id = var.mp_subscription_enabled ? var.mp_listing_resource_db_id : var.db_custom_image_id
+  es_custom_image_id = var.mp_subscription_enabled ? var.mp_listing_resource_es_id : var.es_custom_image_id
 
   # Local to control subscription to Marketplace image.
   mp_subscription_enabled = var.mp_subscription_enabled ? 1 : 0
 
   # Marketplace Image listing variables - required for subscription only
   listing_id               = var.mp_listing_id
-  listing_resource_id      = var.mp_listing_resource_id
+  listing_resource_app_id      = var.mp_listing_resource_app_id
+  listing_resource_db_id      = var.mp_listing_resource_db_id
+  listing_resource_es_id      = var.mp_listing_resource_es_id
   listing_resource_version = var.mp_listing_resource_version
 
   

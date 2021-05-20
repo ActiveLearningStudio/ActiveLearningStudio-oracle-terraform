@@ -25,10 +25,21 @@ variable "mp_listing_id" {
   description = "Marketplace Listing OCID"
 }
 
-variable "mp_listing_resource_id" {
+variable "mp_listing_resource_app_id" {
   // default = "ocid1.image.oc1.."
   default     = ""
-  description = "Marketplace Listing Image OCID"
+  description = "Marketplace Listing Image APP OCID"
+}
+
+variable "mp_listing_resource_db_id" {
+  // default = "ocid1.image.oc1.."
+  default     = ""
+  description = "Marketplace Listing Image DB OCID"
+}
+variable "mp_listing_resource_es_id" {
+  // default = "ocid1.image.oc1.."
+  default     = ""
+  description = "Marketplace Listing Image ES OCID"
 }
 
 variable "mp_listing_resource_version" {
@@ -40,16 +51,12 @@ variable "mp_listing_resource_version" {
 ############################
 #  Custom Image           #
 ############################
-variable "custom_image_id" {
-  default     = "ocid1.image.oc1...."
-  description = "Custom Image OCID"
-}
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaam7bjbbucwpqh4qgcdj3pskag7xiuidqqrw7s3f36blvcfyvsgjlq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaasubmwzlqeejzo6ev4wxqixwyis6arkzo4xa6kgyh5l356w4wyxga"
   description = "APP Image OCID"
 }
 variable "db_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaaafrrzzpy7p4rmp2a76dwqqletqdq753rgypbiqdzd4r6c5f2staq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaaubvzehzt33x63yoqver4bcowuamd4ssyunp3p2lk22qmdlzts4lq"
   description = "DB Image OCID"
 }
 variable "es_custom_image_id" {
@@ -277,11 +284,6 @@ variable "terraform_trax_site" {
   type = string
   default = "oracle-trax.currikistudio.org"
 }
-variable "http_scheme" {
-  description = "http_scheme"
-  type = string
-  default = "https"
-}
 variable "instance_display_name" {
   description = "instance_display_name"
   type = string
@@ -292,20 +294,16 @@ variable "db_instance_display_name" {
   type = string
   default = "Curriki DB Instance"
 }
-variable "elastic_instance_name" {
-  description = "elastic_instance_name"
+variable "es_instance_display_name" {
+  description = "es_instance_display_name"
   type = string
   default = "Curriki Elastic Instance"
 }
+
 variable "mysql_database" {
   description = "mysql_database"
   type = string
   default = "mysql_database"
-}
-variable "elastic_password" {
-  description = "elastic_password"
-  type = string
-  default = "elastic_password"
 }
 variable "mysql_user" {
   description = "mysql_user"
@@ -327,16 +325,18 @@ variable "mysql_local_port" {
   type = string
   default = "3307"
 }
-variable "pgadmin_default_email" {
-  description = "pgadmin_default_email"
+variable "phpmyadmin_exposed_port" {
+  description = "phpmyadmin_exposed_port"
   type = string
-  default = "admin@currikistudio.org"
+  default = "7000"
 }
-variable "pgadmin_default_password" {
-  description = "pgadmin_default_password"
+
+variable "elastic_password" {
+  description = "elastic_password"
   type = string
-  default = "pgadmin_default_password"
+  default = "elastic_password"
 }
+
 variable "postgres_user" {
   description = "postgres_user"
   type = string
@@ -360,8 +360,20 @@ variable "postgres_trax_db" {
 variable "postges_exposed_port" {
   description = "postges_exposed_port"
   type = string
-  default = "8080"
+  default = "5434"
 }
+
+variable "pgadmin_default_email" {
+  description = "pgadmin_default_email"
+  type = string
+  default = "admin@currikistudio.org"
+}
+variable "pgadmin_default_password" {
+  description = "pgadmin_default_password"
+  type = string
+  default = "pgadmin_default_password"
+}
+
 
 variable "react_app_pexel_api" {
   description = "react_app_pexel_api"
@@ -398,20 +410,9 @@ variable "tsugi_admin_password" {
 variable "pgadmin_exposed_port" {
   description = "pgadmin_exposed_port"
   type = string
-  default = "5434"
+  default = "8080"
 }
 
-variable "phpmyadmin_exposed_port" {
-  description = "phpmyadmin_exposed_port"
-  type = string
-  default = "7000"
-}
-
-variable "es_instance_display_name" {
-  description = "es_instance_display_name"
-  type = string
-  default = "es-instance"
-}
 
 variable "mail_username" {
   description = "mail_username"
