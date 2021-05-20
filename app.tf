@@ -64,7 +64,7 @@ resource "oci_core_instance" "oracle_instance" {
     compartment_id = var.compartment_ocid
     shape = var.vm_compute_shape
     source_details {
-        source_id = "ocid1.image.oc1.iad.aaaaaaaa6yq3ga3hj2cune4holkuqdz7seaogsueznj6rt3qo6p2i5iszp7a" # CurrikiAPPwithoutHTTPS
+        source_id = "ocid1.image.oc1.iad.aaaaaaaam7bjbbucwpqh4qgcdj3pskag7xiuidqqrw7s3f36blvcfyvsgjlq" # CurrikiAPPwithoutHTTPS
         # source_id = "ocid1.image.oc1.iad.aaaaaaaamkzk5ldaouovz42drxqxjoiqu4i3hrnw6hlepp4yyhyjrjsitnza" # Old Image
         source_type = "image"
     }
@@ -238,7 +238,6 @@ resource "null_resource" "studio-script" {
             "sed -i \"s/curriki_mail_from_address/${var.mail_from_address}/g\" /curriki/setup.sh",
             "sed -i \"s/curriki_gapi_credentials/${var.gapi_credentials}/g\" /curriki/setup.sh",
             "sed -i \"s/curriki_elastic_host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_elastic_user/${var.elastic_username}/g\" /curriki/setup.sh",
             "sed -i \"s/curriki_elastic_password/${var.elastic_password}/g\" /curriki/setup.sh",
             "sed -i \"s/curriki_lrs_username/${var.lrs_username}/g\" /curriki/setup.sh",
             "sed -i \"s/curriki_lrs_password/${var.lrs_password}/g\" /curriki/setup.sh",

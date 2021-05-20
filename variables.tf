@@ -288,32 +288,27 @@ variable "elastic_instance_name" {
 variable "mysql_database" {
   description = "mysql_database"
   type = string
-  default = "currikidb"
+  default = "mysql_database"
 }
 variable "elastic_password" {
   description = "elastic_password"
   type = string
-  default = "currikidb"
-}
-variable "elastic_username" {
-  description = "elastic_username"
-  type = string
-  default = "currikidb"
+  default = "elastic_password"
 }
 variable "mysql_user" {
   description = "mysql_user"
   type = string
-  default = "currikidb"
+  default = "mysql_user"
 }
 variable "mysql_password" {
   description = "mysql_password"
   type = string
-  default = "currikidb"
+  default = "mysql_password"
 }
 variable "mysql_root_password" {
   description = "mysql_root_password"
   type = string
-  default = "currikidb"
+  default = "mysql_root_password"
 }
 variable "mysql_local_port" {
   description = "mysql_local_port"
@@ -323,32 +318,32 @@ variable "mysql_local_port" {
 variable "pgadmin_default_email" {
   description = "pgadmin_default_email"
   type = string
-  default = "currikidb@gmail.com"
+  default = "admin@currikistudio.org"
 }
 variable "pgadmin_default_password" {
   description = "pgadmin_default_password"
   type = string
-  default = "currikidb"
+  default = "pgadmin_default_password"
 }
 variable "postgres_user" {
   description = "postgres_user"
   type = string
-  default = "currikidb"
+  default = "postgres_user"
 }
 variable "postgres_password" {
   description = "postgres_password"
   type = string
-  default = "currikidb"
+  default = "postgres_password"
 }
 variable "postgres_db" {
   description = "postgres_db"
   type = string
-  default = "currikidb"
+  default = "postgres_db"
 }
 variable "postgres_trax_db" {
   description = "postgres_trax_db"
   type = string
-  default = "currikidb"
+  default = "postgres_trax_db"
 }
 variable "postges_exposed_port" {
   description = "postges_exposed_port"
@@ -359,33 +354,33 @@ variable "postges_exposed_port" {
 variable "react_app_pexel_api" {
   description = "react_app_pexel_api"
   type = string
-  default = "currikidb"
+  default = "563492ad6f91700001000001155d7b75f5424ea694b81ce9f867dddf"
 }
 variable "react_app_google_captcha" {
   description = "react_app_google_captcha"
   type = string
-  default = "currikidb"
+  default = ""
 }
 variable "react_app_gapi_client_id" {
   description = "react_app_gapi_client_id"
   type = string
-  default = "currikidb"
+  default = ""
 }
 variable "react_app_hubpot" {
   description = "react_app_hubpot"
   type = string
-  default = "currikidb"
+  default = ""
 }
 variable "react_app_h5p_key" {
   description = "react_app_h5p_key"
   type = string
-  default = "currikidb"
+  default = "B6TFsmFD5TLZaWCAYZ91ly0D2We0xjLAtRmBJzQ"
 }
 
 variable "tsugi_admin_password" {
   description = "tsugi_admin_password"
   type = string
-  default = "currikidb"
+  default = "tsugi_admin_password"
 }
 
 variable "pgadmin_exposed_port" {
@@ -409,38 +404,38 @@ variable "es_instance_display_name" {
 variable "mail_username" {
   description = "mail_username"
   type = string
-  default = "currikidb"
+  default = "postmaster@currikistudio.org"
 }
 
 variable "mail_password" {
   description = "mail_password"
   type = string
-  default = "currikidb"
+  default = "mail_password"
 }
 
 variable "mail_from_address" {
   description = "mail_from_address"
   type = string
-  default = "currikidb"
+  default = "info@currikistudio.org"
 }
 
 
 variable "gapi_credentials" {
   description = "gapi_credentials"
   type = string
-  default = "currikidb"
+  default = "gapi_credentials"
 }
 
 variable "lrs_username" {
   description = "lrs_username"
   type = string
-  default = "currikidb"
+  default = "lrs_username"
 }
 
 variable "lrs_password" {
   description = "lrs_password"
   type = string
-  default = "currikidb"
+  default = "lrs_password"
 }
 
 
