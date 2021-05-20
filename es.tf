@@ -1,47 +1,10 @@
-
-# resource "oci_core_security_list" "curriki_es_security_list" {
-#     #Required
-#     compartment_id = var.compartment_ocid
-#     vcn_id = local.use_existing_network ? var.vcn_id : oci_core_vcn.curriki_vcn.0.id
-
-#     #Optional
-#     display_name = "curriki-es-security-list"
-#     egress_security_rules {
-#         #Required
-#         destination = "0.0.0.0/0"
-#         protocol = "all"
-#     }
-#     ingress_security_rules {
-#         #Required
-#         protocol = "6"
-#         source = "0.0.0.0/0"
-#         tcp_options {
-#             max = "9200"
-#             min = "9200"
-#         }
-#     }
-#     ingress_security_rules {
-#         #Required
-#         protocol = "6"
-#         source = "0.0.0.0/0"
-#         tcp_options {
-#             max = "22"
-#             min = "22"
-#         }
-#     }
-# }
-
-
-
 resource "oci_core_instance" "es_instance" {
     # Required
     availability_domain = local.availability_domain
-    # availability_domain = data.oci_identity_availability_domains.curriki_es_availability_domains.availability_domains[0].name
     compartment_id = var.compartment_ocid
     shape = var.vm_compute_shape
     source_details {
-        source_id = "ocid1.image.oc1.iad.aaaaaaaagyv764zjtiwzfke7mrrqtv73j2dpeq26ciknq44zq44tqtvwisca" #es Custom Image
-        #source_id = "ocid1.image.oc1.iad.aaaaaaaamkzk5ldaouovz42drxqxjoiqu4i3hrnw6hlepp4yyhyjrjsitnza"
+        source_id = var.es_custom_image_id
         source_type = "image"
     }
 

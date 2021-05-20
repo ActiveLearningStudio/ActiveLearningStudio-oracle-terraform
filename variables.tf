@@ -44,6 +44,18 @@ variable "custom_image_id" {
   default     = "ocid1.image.oc1...."
   description = "Custom Image OCID"
 }
+variable "app_custom_image_id" {
+  default     = "ocid1.image.oc1.iad.aaaaaaaam7bjbbucwpqh4qgcdj3pskag7xiuidqqrw7s3f36blvcfyvsgjlq"
+  description = "APP Image OCID"
+}
+variable "db_custom_image_id" {
+  default     = "ocid1.image.oc1.iad.aaaaaaaaafrrzzpy7p4rmp2a76dwqqletqdq753rgypbiqdzd4r6c5f2staq"
+  description = "DB Image OCID"
+}
+variable "es_custom_image_id" {
+  default     = "ocid1.image.oc1.iad.aaaaaaaagyv764zjtiwzfke7mrrqtv73j2dpeq26ciknq44zq44tqtvwisca"
+  description = "Elastic Search Image OCID"
+}
 
 ############################
 #  Compute Configuration   #

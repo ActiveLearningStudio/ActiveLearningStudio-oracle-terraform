@@ -1,61 +1,6 @@
 resource "tls_private_key" "public_private_key_pair" {
   algorithm   = "RSA"
 }
-  
-
-# resource "oci_core_security_list" "curriki_security_list" {
-#     #Required
-#     compartment_id = var.compartment_ocid
-#     vcn_id = local.use_existing_network ? var.vcn_id : oci_core_vcn.curriki_vcn.0.id
-
-#     #Optional
-#     display_name = "curriki-security-list"
-#     egress_security_rules {
-#         #Required
-#         destination = "0.0.0.0/0"
-#         protocol = "all"
-#     }
-#     ingress_security_rules {
-#         #Required
-#         protocol = "6"
-#         source = "0.0.0.0/0"
-
-#         tcp_options {
-#             max = "80"
-#             min = "80"
-#         }
-#     }
-#     ingress_security_rules {
-#         #Required
-#         protocol = "6"
-#         source = "0.0.0.0/0"
-#         tcp_options {
-#             max = "22"
-#             min = "22"
-#         }
-#     }
-#     #Redis
-#     ingress_security_rules {
-#         #Required
-#         protocol = "6"
-#         source = "0.0.0.0/0"
-#         tcp_options {
-#             max = "4003"
-#             min = "4003"
-#         }
-#     }
-#     ingress_security_rules {
-#         #Required
-#         protocol = "6"
-#         source = "0.0.0.0/0"
-#         tcp_options {
-#             max = "443"
-#             min = "443"
-#         }
-#     }
-# }
-
-
 
 resource "oci_core_instance" "oracle_instance" {
     # Required
@@ -64,8 +9,7 @@ resource "oci_core_instance" "oracle_instance" {
     compartment_id = var.compartment_ocid
     shape = var.vm_compute_shape
     source_details {
-        source_id = "ocid1.image.oc1.iad.aaaaaaaam7bjbbucwpqh4qgcdj3pskag7xiuidqqrw7s3f36blvcfyvsgjlq" # CurrikiAPPwithoutHTTPS
-        # source_id = "ocid1.image.oc1.iad.aaaaaaaamkzk5ldaouovz42drxqxjoiqu4i3hrnw6hlepp4yyhyjrjsitnza" # Old Image
+        source_id = var.app_custom_image_id
         source_type = "image"
     }
     dynamic "shape_config" {
