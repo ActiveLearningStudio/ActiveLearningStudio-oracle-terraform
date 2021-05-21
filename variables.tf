@@ -52,11 +52,11 @@ variable "mp_listing_resource_version" {
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaawdzxofyne5buqy2ob3s2fsxbuhabw6bsqbrjfuaoqoeoagd3fisa"
+  default     = "ocid1.image.oc1.iad.aaaaaaaapzm263v5jr5phsoxxmrzbjtm6jznariupib7wrrsp35jfjmuxnga"
   description = "APP Image OCID"
 }
 variable "db_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaa65euaez3vr3xre6vovcii4asvq7cknskpaqyqt3bpqdrt37rl7oa"
+  default     = "ocid1.image.oc1.iad.aaaaaaaakmglx2ti2k2luvpaktd4hg3qtpezf3jvzxcaoaiauzpvie622twa"
   description = "DB Image OCID"
 }
 variable "es_custom_image_id" {
@@ -435,17 +435,17 @@ variable "tsugi_admin_password" {
 #   default = "gapi_credentials"
 # }
 
-variable "lrs_username" {
-  description = "lrs_username"
-  type = string
-  default = "lrs_username"
-}
+# variable "lrs_username" {
+#   description = "lrs_username"
+#   type = string
+#   default = "lrs_username"
+# }
 
-variable "lrs_password" {
-  description = "lrs_password"
-  type = string
-  default = "lrs_password"
-}
+# variable "lrs_password" {
+#   description = "lrs_password"
+#   type = string
+#   default = "lrs_password"
+# }
 variable "postgres_trax_db" {
   description = "postgres_trax_db"
   type = string

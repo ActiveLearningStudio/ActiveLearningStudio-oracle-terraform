@@ -198,7 +198,7 @@ resource "null_resource" "studio-script" {
             "sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/api/.env",
-            "sed -i 's/substitute-postgres-db-port/${var.postges_exposed_port}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-port/${var.postges_exposed_port}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/api/.env",
             "sed -i 's/substitute-lrs-db-database/${var.postgres_trax_db}/g' /curriki/api/.env",
             "sed -i 's/substitute-elastic-host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g' /curriki/api/.env",
@@ -245,7 +245,8 @@ resource "null_resource" "studio-script" {
             "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/trax-lrs/.env",
             "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/trax-lrs/.env",
             "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/trax-lrs/.env",
-            "sed -i 's/substitute-postgres-db-port/${var.postges_exposed_port}/g' /curriki/trax-lrs/.env",
+            "sed -i 's/substitute-lrs-db-database/${var.postgres_trax_db}/g' /curriki/trax-lrs/.env",
+            "sed -i 's/substitute-postgres-port/${var.postges_exposed_port}/g' /curriki/trax-lrs/.env",
             
 
             # Tsugi
