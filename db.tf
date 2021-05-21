@@ -168,6 +168,11 @@ resource "null_resource" "db-scripts" {
             "cd ~/curriki-db && sudo docker-compose up --force-recreate -d",
             "sleep 60",
             "sudo sh ~/curriki-db/db-update-creds.sh",
+
+            #Removing temporary public key
+            # "KEYWORD=${tls_private_key.public_private_key_pair.public_key_openssh}",
+            # "ESCAPED_KEYWORD=$(printf '%s\n' \"$KEYWORD\" | sed -e 's/[]\\/$*.^[]/\\&/g');",
+            # "sed -i \"s/$ESCAPED_KEYWORD//g\" /home/opc/.ssh/authorized_keys"
          ]
          connection {
              type = "ssh"

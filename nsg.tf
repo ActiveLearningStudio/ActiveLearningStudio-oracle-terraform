@@ -1,4 +1,4 @@
-resource "oci_core_network_security_group" "simple_nsg" {
+resource "oci_core_network_security_group" "app_nsg" {
   #Required
   compartment_id = var.compartment_ocid
   vcn_id         = local.use_existing_network ? var.vcn_id : oci_core_vcn.curriki_vcn.0.id
@@ -11,8 +11,8 @@ resource "oci_core_network_security_group" "simple_nsg" {
 
 
 # Allow Egress traffic to all networks
-resource "oci_core_network_security_group_security_rule" "simple_rule_egress" {
-  network_security_group_id = oci_core_network_security_group.simple_nsg.id
+resource "oci_core_network_security_group_security_rule" "app_rule_egress" {
+  network_security_group_id = oci_core_network_security_group.app_nsg.id
 
   direction   = "EGRESS"
   protocol    = "all"
@@ -21,8 +21,8 @@ resource "oci_core_network_security_group_security_rule" "simple_rule_egress" {
 }
 
 # Allow SSH (TCP port 22) Ingress traffic from any network
-resource "oci_core_network_security_group_security_rule" "simple_rule_ssh_ingress" {
-  network_security_group_id = oci_core_network_security_group.simple_nsg.id
+resource "oci_core_network_security_group_security_rule" "app_rule_ssh_ingress" {
+  network_security_group_id = oci_core_network_security_group.app_nsg.id
   protocol                  = "6"
   direction                 = "INGRESS"
   source                    = var.nsg_source_cidr
@@ -37,8 +37,8 @@ resource "oci_core_network_security_group_security_rule" "simple_rule_ssh_ingres
 }
 
 # Allow HTTPS (TCP port 443) Ingress traffic from any network
-resource "oci_core_network_security_group_security_rule" "simple_rule_https_ingress" {
-  network_security_group_id = oci_core_network_security_group.simple_nsg.id
+resource "oci_core_network_security_group_security_rule" "app_rule_https_ingress" {
+  network_security_group_id = oci_core_network_security_group.app_nsg.id
   protocol                  = "6"
   direction                 = "INGRESS"
   source                    = var.nsg_source_cidr
@@ -53,8 +53,8 @@ resource "oci_core_network_security_group_security_rule" "simple_rule_https_ingr
 }
 
 # Allow HTTP (TCP port 80) Ingress traffic from any network
-resource "oci_core_network_security_group_security_rule" "simple_rule_http_ingress" {
-  network_security_group_id = oci_core_network_security_group.simple_nsg.id
+resource "oci_core_network_security_group_security_rule" "app_rule_http_ingress" {
+  network_security_group_id = oci_core_network_security_group.app_nsg.id
   protocol                  = "6"
   direction                 = "INGRESS"
   source                    = var.nsg_source_cidr
@@ -69,8 +69,8 @@ resource "oci_core_network_security_group_security_rule" "simple_rule_http_ingre
 }
 
 # Allow (TCP port 4003) Ingress traffic from any network
-resource "oci_core_network_security_group_security_rule" "simple_rule_4003_ingress" {
-  network_security_group_id = oci_core_network_security_group.simple_nsg.id
+resource "oci_core_network_security_group_security_rule" "app_rule_4003_ingress" {
+  network_security_group_id = oci_core_network_security_group.app_nsg.id
   protocol                  = "6"
   direction                 = "INGRESS"
   source                    = var.nsg_source_cidr
@@ -86,8 +86,8 @@ resource "oci_core_network_security_group_security_rule" "simple_rule_4003_ingre
 
 
 # Allow ANY Ingress traffic from within simple vcn
-resource "oci_core_network_security_group_security_rule" "simple_rule_all_simple_vcn_ingress" {
-  network_security_group_id = oci_core_network_security_group.simple_nsg.id
+resource "oci_core_network_security_group_security_rule" "app_rule_all_app_vcn_ingress" {
+  network_security_group_id = oci_core_network_security_group.app_nsg.id
   protocol                  = "all"
   direction                 = "INGRESS"
   source                    = var.vcn_cidr_block

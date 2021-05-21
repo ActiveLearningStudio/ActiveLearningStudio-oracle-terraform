@@ -26,7 +26,7 @@ resource "oci_core_instance" "oracle_instance" {
         assign_public_ip = false
         display_name = "studiovnic"
         subnet_id = local.use_existing_network ? var.subnet_id : oci_core_subnet.curriki_subnet[0].id
-        nsg_ids                = [oci_core_network_security_group.simple_nsg.id]
+        nsg_ids                = [oci_core_network_security_group.app_nsg.id]
     }
     extended_metadata = {
       ssh_authorized_keys = tls_private_key.public_private_key_pair.public_key_openssh
@@ -222,9 +222,6 @@ resource "null_resource" "studio-script" {
             "sed -i \"s/substitute-react-app-pexel-api/${var.react_app_pexel_api}/g\" /curriki/client/.env.local",
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/client/.env.local",
             "sed -i 's/substitute-react-app-resource-url/${var.main_site}/g' /curriki/client/.env.local",
-            # "sed -i \"s/substitute-react-app-google-captcha/${var.react_app_google_captcha}/g\" .env.client.example",
-            # "sed -i \"s/substitute-react-app-gapi-client-id/${var.react_app_gapi_client_id}/g\" .env.client.example",
-            # "sed -i \"s/substitute-react-app-hubpot/${var.react_app_hubpot}/g\" .env.client.example",
             "sed -i \"s/substitute-react-app-h5p-key/B6TFsmFD5TLZaWCAYZ91ly0D2We0xjLAtRmBJzQ/g\" /curriki/client/.env.local",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/client/.env.local",
 
@@ -259,14 +256,10 @@ resource "null_resource" "studio-script" {
            "sed -i 's/substitute-tsugi-db-dbname/${var.tsugi_database}/g' /curriki/tsugi/config.php",
            "sed -i 's/substitute-mysql-db-user/${var.mysql_user}/g' /curriki/tsugi/config.php",
            "sed -i 's/substitute-mysql-db-password/${var.mysql_password}/g' /curriki/tsugi/config.php",
-           "sed -i 's/substitute-tsugi-admin-password/${var.tsugi_admin_password}/g' /curriki/tsugi/config.php",
-           
+           "sed -i 's/substitute-tsugi-admin-password/${var.tsugi_admin_password}/g' /curriki/tsugi/config.php",           
            "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/tsugi/mod/curriki/config.php",
 
 
-
-
-            
             #Installing
             "sudo docker stack deploy --compose-file /curriki/docker-compose.yml currikistack",
             " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ')",
@@ -276,7 +269,12 @@ resource "null_resource" "studio-script" {
               " echo 'Please wait while we are installing the CurrikiStudio...' ",
               " sleep 10 ",
               " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ') ",
-            " done "
+            " done ",
+
+            #Removing temporary public key
+            # "KEYWORD=${tls_private_key.public_private_key_pair.public_key_openssh}",
+            # "ESCAPED_KEYWORD=$(printf '%s\n' \"$KEYWORD\" | sed -e 's/[]\\/$*.^[]/\\&/g');",
+            # "sed -i \"s/$ESCAPED_KEYWORD//g\" /home/opc/.ssh/authorized_keys"
          ]
          connection {
              type = "ssh"

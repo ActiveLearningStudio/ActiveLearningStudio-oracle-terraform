@@ -1,26 +1,16 @@
 ###
-# compute.tf outputs
+# app.tf, db.tf, es.tf outputs
 ###
 
-output "instance_id" {
-  value = oci_core_instance.oracle_instance.id
+output "app_instance_ip" {
+  value = oci_core_public_ip.ReservedAppPublicIP.ip_address
 }
-
-output "private_key" {
-  value = tls_private_key.public_private_key_pair.private_key_pem
+output "db_instance_ip" {
+  value = oci_core_public_ip.ReservedDBPublicIP.ip_address
 }
-
-# output "instance_public_ip" {
-#   value = oci_core_instance.simple-vm.public_ip
-# }
-
-# output "instance_private_ip" {
-#   value = oci_core_instance.simple-vm.private_ip
-# }
-
-# output "instance_https_url" {
-#   value = (local.is_public_subnet ? "https://${oci_core_instance.simple-vm.public_ip}" : "https://${oci_core_instance.simple-vm.private_ip}")
-# }
+output "es_instance_ip" {
+  value = oci_core_public_ip.ReservedESPublicIP.ip_address
+}
 
 ###
 # network.tf outputs
@@ -39,7 +29,7 @@ output "vcn_cidr_block" {
 }
 
 output "nsg_id" {
-  value = join("", oci_core_network_security_group.simple_nsg.*.id)
+  value = join("", oci_core_network_security_group.app_nsg.*.id)
 }
 
 ###

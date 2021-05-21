@@ -63,8 +63,12 @@ resource "null_resource" "es-scripts" {
             "cd /usr/share/elasticsearch",
             "sudo sed -i \"s/substitute-elastic-password/${var.elastic_password}/g\" setup.sh",
             "sudo sh setup.sh",
-            "sudo service elasticsearch restart"
-            
+            "sudo service elasticsearch restart",
+
+            #Removing temporary public key
+            # "KEYWORD=${tls_private_key.public_private_key_pair.public_key_openssh}",
+            # "ESCAPED_KEYWORD=$(printf '%s\n' \"$KEYWORD\" | sed -e 's/[]\\/$*.^[]/\\&/g');",
+            # "sed -i \"s/$ESCAPED_KEYWORD//g\" /home/opc/.ssh/authorized_keys"
 
          ]
          connection {

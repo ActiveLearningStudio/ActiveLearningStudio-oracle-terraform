@@ -52,11 +52,11 @@ variable "mp_listing_resource_version" {
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaabkae34pjddivar2b7gdxrbtocwi2npstrp3hbr74jwesu3wljzqq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaa52frxos5gexyxtacwire53uhvfifqd2iqv5tztxgzp47bua5bswa"
   description = "APP Image OCID"
 }
 variable "db_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaaiuu4sginz2xa7szsrdz67wtiyrs3437liujay26dkcbhkzdsjddq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaavhzgzgmmpk2x7asj5d2bfxwvrnfv7co3l6sqp45fvamyuuyydpqq"
   description = "DB Image OCID"
 }
 variable "es_custom_image_id" {
@@ -178,7 +178,7 @@ variable "subnet_dns_label" {
 ############################
 variable "nsg_display_name" {
   description = "Network Security Group Name"
-  default     = "simple-network-security-group"
+  default     = "curriki-studio-network-security-group"
 }
 
 variable "nsg_source_cidr" {
