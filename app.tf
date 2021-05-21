@@ -159,42 +159,145 @@ resource "null_resource" "studio-script" {
      depends_on = [ oci_core_instance.oracle_instance, oci_core_volume_attachment.app_volume_attachment ]
      provisioner "remote-exec" {
          inline = [
-             #Client
-            "sed -i \"s/terraform_site/${var.terraform_site}/g\" /curriki/setup.sh",
-            "sed -i \"s/terraform_admin_site/${var.terraform_admin_site}/g\" /curriki/setup.sh",
-            "sed -i \"s/terraform_tsugi_site/${var.terraform_tsugi_site}/g\" /curriki/setup.sh",
-            "sed -i \"s/terraform_trax_site/${var.terraform_trax_site}/g\" /curriki/setup.sh",
-            "sed -i \"s/react_app_pexel_api/${var.react_app_pexel_api}/g\" /curriki/setup.sh",
-            "sed -i \"s/react_app_google_captcha/${var.react_app_google_captcha}/g\" /curriki/setup.sh",
-            "sed -i \"s/react_app_gapi_client_id/${var.react_app_gapi_client_id}/g\" /curriki/setup.sh",
-            "sed -i \"s/react_app_hubpot/${var.react_app_hubpot}/g\" /curriki/setup.sh",
-            "sed -i \"s/react_app_h5p_key/${var.react_app_h5p_key}/g\" /curriki/setup.sh",
+             # Lets Encrypt
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/init-letsencrypt.sh",
+            "sed -i 's/substitute-terraform-admin-domain.com/${var.terraform_admin_site}/g' /curriki/init-letsencrypt.sh",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/init-letsencrypt.sh",
+            "sed -i 's/substitute-terraform-trax-domain.com/${var.terraform_trax_site}/g' /curriki/init-letsencrypt.sh",
+            
+             # Lets Encrypt
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/init-generate-ssl.sh",
+            "sed -i 's/substitute-terraform-admin-domain.com/${var.terraform_admin_site}/g' /curriki/init-generate-ssl.sh",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/init-generate-ssl.sh",
+            "sed -i 's/substitute-terraform-trax-domain.com/${var.terraform_trax_site}/g' /curriki/init-generate-ssl.sh",
+            
+            # nginx
+
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
+            "sed -i 's/substitute-terraform-admin-domain.com/${var.terraform_admin_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
+            "sed -i 's/substitute-terraform-trax-domain.com/${var.terraform_trax_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
+
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/data/nginx/prod-conf/app.conf",
+            "sed -i 's/substitute-terraform-admin-domain.com/${var.terraform_admin_site}/g' /curriki/data/nginx/prod-conf/app.conf",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/data/nginx/prod-conf/app.conf",
+            "sed -i 's/substitute-terraform-trax-domain.com/${var.terraform_trax_site}/g' /curriki/data/nginx/prod-conf/app.conf",
+
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/ssl.conf",
+            "sed -i 's/substitute-terraform-admin-domain.com/${var.terraform_admin_site}/g' /curriki/ssl.conf",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/ssl.conf",
+            "sed -i 's/substitute-terraform-trax-domain.com/${var.terraform_trax_site}/g' /curriki/ssl.conf",
+
+            # API
+            "cp /curriki/api/.env.example /curriki/api/.env",
+            "cp /curriki/api/laravel-echo-server-https-example.json /curriki/api/laravel-echo-server.json",
             "echo $(tr -dc A-Za-z0-9 </dev/urandom | head -c 32 ; echo '' ) > /curriki/.appkey",
-            "sed -i \"s/curriki_app_key/$(cat /curriki/.appkey)/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_db_port/${var.postges_exposed_port}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_db/${var.postgres_db}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_user/${var.postgres_user}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_postgres_password/${var.postgres_password}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_mail_username/${var.mail_username}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_mail_password/${var.mail_password}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_mail_from_address/${var.mail_from_address}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_gapi_credentials/${var.gapi_credentials}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_elastic_host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_elastic_password/${var.elastic_password}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_lrs_username/${var.lrs_username}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_lrs_password/${var.lrs_password}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_lrs_db_database/${var.postgres_trax_db}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_port/${var.mysql_local_port}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_tsugi_db_dbname/${var.mysql_database}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_user/${var.mysql_user}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_mysql_db_password/${var.mysql_root_password}/g\" /curriki/setup.sh",
-            "sed -i \"s/curriki_tsugi_admin_password/${var.tsugi_admin_password}/g\" /curriki/setup.sh",
+            "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/api/.env",
+            
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-db-port/${var.postges_exposed_port}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/api/.env",
+            "sed -i 's/substitute-lrs-db-database/${var.postgres_trax_db}/g' /curriki/api/.env",
+            "sed -i 's/substitute-elastic-host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g' /curriki/api/.env",
+            
+            "sed -i 's/substitute-elastic-user/elastic/g' /curriki/api/.env",
+            "sed -i 's/substitute-elastic-password/${var.elastic_password}/g' /curriki/api/.env",
+            "sed -i 's/substitute-terraform-trax-domain.com/${var.terraform_trax_site}/g' /curriki/api/.env",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/api/.env",
+
+            "sed -i 's/substitute-lrs-username/testsuite/g' /curriki/api/.env",
+            "sed -i 's/substitute-lrs-password/password/g' /curriki/api/.env",
+            
+            
+
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/api/laravel-echo-server.json",
+            
+
+            
+            # Client
+            "cp /curriki/client/.env.example /curriki/client/.env.local",
+            "sed -i \"s/substitute-react-app-pexel-api/${var.react_app_pexel_api}/g\" /curriki/client/.env.local",
+            "sed -i 's/substitute-terraform-domain.com/${var.terraform_site}/g' /curriki/client/.env.local",
+            "sed -i 's/substitute-react-app-resource-url/${var.terraform_site}/g' /curriki/client/.env.local",
+            # "sed -i \"s/substitute-react-app-google-captcha/${var.react_app_google_captcha}/g\" .env.client.example",
+            # "sed -i \"s/substitute-react-app-gapi-client-id/${var.react_app_gapi_client_id}/g\" .env.client.example",
+            # "sed -i \"s/substitute-react-app-hubpot/${var.react_app_hubpot}/g\" .env.client.example",
+            "sed -i \"s/substitute-react-app-h5p-key/${var.react_app_h5p_key}/g\" /curriki/client/.env.local",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/client/.env.local",
+
+            # Admin
+            "cp /curriki/admin/.env.example /curriki/admin/.env",
+            "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/admin/.env",
+            "sed -i \"s/substitute-terraform-admin-domain.com/${var.terraform_admin_site}/g\" /curriki/admin/.env",
+            "sed -i \"s/substitute-terraform-domain.com/${var.terraform_site}/g\" /curriki/admin/.env",
+            
+            
+
+            # Trax
+
+            "cp /curriki/trax-lrs/.env.example /curriki/trax-lrs/.env",
+            "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/trax-lrs/.env",
+            "sed -i \"s/substitute-terraform-trax-domain.com/${var.terraform_trax_site}/g\" /curriki/trax-lrs/.env",
+            "sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/trax-lrs/.env",
+            "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/trax-lrs/.env",
+            "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/trax-lrs/.env",
+            "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/trax-lrs/.env",
+            "sed -i 's/substitute-postgres-db-port/${var.postges_exposed_port}/g' /curriki/trax-lrs/.env",
+            
+
+            # Tsugi
+
+            "cp /curriki/tsugi/tsugi-main-config.example.php /curriki/tsugi/config.php",
+            "cp /curriki/tsugi/mod/curriki/tsugi-curriki-config.php /curriki/tsugi/mod/curriki/config.php",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.terraform_tsugi_site}/g' /curriki/tsugi/config.php",
+            "sed -i 's/substitute-mysql-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/tsugi/config.php",
+           "sed -i 's/substitute-mysql-db-port/${var.mysql_local_port}/g' /curriki/tsugi/config.php",
+           "sed -i 's/substitute-tsugi-db-dbname/${var.mysql_database}/g' /curriki/tsugi/config.php",
+           "sed -i 's/substitute-mysql-db-user/${var.mysql_user}/g' /curriki/tsugi/config.php",
+           "sed -i 's/substitute-mysql-db-password/${var.mysql_password}/g' /curriki/tsugi/config.php",
+           "sed -i 's/substitute-tsugi-admin-password/${var.tsugi_admin_password}/g' /curriki/tsugi/config.php",
+           
+           "sed -i 's/substitute-terraform-domain.com/${var.terraform_tsugi_site}/g' /curriki/tsugi/mod/curriki/config.php",
+
+
+
+
+            
+            
+            # "sed -i \"s/react_app_pexel_api/${var.react_app_pexel_api}/g\" /curriki/setup.sh",
+            # "sed -i \"s/react_app_google_captcha/${var.react_app_google_captcha}/g\" /curriki/setup.sh",
+            # "sed -i \"s/react_app_gapi_client_id/${var.react_app_gapi_client_id}/g\" /curriki/setup.sh",
+            # "sed -i \"s/react_app_hubpot/${var.react_app_hubpot}/g\" /curriki/setup.sh",
+            # "sed -i \"s/react_app_h5p_key/${var.react_app_h5p_key}/g\" /curriki/setup.sh",
+            
+            
+            # "sed -i \"s/curriki_postgres_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_postgres_db_port/${var.postges_exposed_port}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_postgres_db/${var.postgres_db}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_postgres_user/${var.postgres_user}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_postgres_password/${var.postgres_password}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_mail_username/${var.mail_username}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_mail_password/${var.mail_password}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_mail_from_address/${var.mail_from_address}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_gapi_credentials/${var.gapi_credentials}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_elastic_host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_elastic_password/${var.elastic_password}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_lrs_username/${var.lrs_username}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_lrs_password/${var.lrs_password}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_lrs_db_database/${var.postgres_trax_db}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_mysql_db_host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_mysql_db_port/${var.mysql_local_port}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_tsugi_db_dbname/${var.mysql_database}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_mysql_db_user/${var.mysql_user}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_mysql_db_password/${var.mysql_root_password}/g\" /curriki/setup.sh",
+            # "sed -i \"s/curriki_tsugi_admin_password/${var.tsugi_admin_password}/g\" /curriki/setup.sh",
             
             #Installing
-            "cd /curriki",
-            "sudo ./setup.sh",
+            # "cd /curriki",
+            # "sudo ./setup.sh",
             "sudo docker stack deploy --compose-file /curriki/docker-compose.yml currikistack",
             " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ')",
             " while [ \"$up\" != \"1/1\" ] ",
@@ -214,8 +317,4 @@ resource "null_resource" "studio-script" {
      }
  }
  
-
-
-
-
 

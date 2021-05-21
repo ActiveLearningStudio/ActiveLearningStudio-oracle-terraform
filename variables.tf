@@ -52,11 +52,11 @@ variable "mp_listing_resource_version" {
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaasubmwzlqeejzo6ev4wxqixwyis6arkzo4xa6kgyh5l356w4wyxga"
+  default     = "ocid1.image.oc1.iad.aaaaaaaawdzxofyne5buqy2ob3s2fsxbuhabw6bsqbrjfuaoqoeoagd3fisa"
   description = "APP Image OCID"
 }
 variable "db_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaaubvzehzt33x63yoqver4bcowuamd4ssyunp3p2lk22qmdlzts4lq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaa65euaez3vr3xre6vovcii4asvq7cknskpaqyqt3bpqdrt37rl7oa"
   description = "DB Image OCID"
 }
 variable "es_custom_image_id" {
@@ -352,11 +352,7 @@ variable "postgres_db" {
   type = string
   default = "postgres_db"
 }
-variable "postgres_trax_db" {
-  description = "postgres_trax_db"
-  type = string
-  default = "postgres_trax_db"
-}
+
 variable "postges_exposed_port" {
   description = "postges_exposed_port"
   type = string
@@ -373,6 +369,11 @@ variable "pgadmin_default_password" {
   type = string
   default = "pgadmin_default_password"
 }
+variable "pgadmin_exposed_port" {
+  description = "pgadmin_exposed_port"
+  type = string
+  default = "8080"
+}
 
 
 variable "react_app_pexel_api" {
@@ -380,21 +381,21 @@ variable "react_app_pexel_api" {
   type = string
   default = "563492ad6f91700001000001155d7b75f5424ea694b81ce9f867dddf"
 }
-variable "react_app_google_captcha" {
-  description = "react_app_google_captcha"
-  type = string
-  default = ""
-}
-variable "react_app_gapi_client_id" {
-  description = "react_app_gapi_client_id"
-  type = string
-  default = ""
-}
-variable "react_app_hubpot" {
-  description = "react_app_hubpot"
-  type = string
-  default = ""
-}
+# variable "react_app_google_captcha" {
+#   description = "react_app_google_captcha"
+#   type = string
+#   default = ""
+# }
+# variable "react_app_gapi_client_id" {
+#   description = "react_app_gapi_client_id"
+#   type = string
+#   default = ""
+# }
+# variable "react_app_hubpot" {
+#   description = "react_app_hubpot"
+#   type = string
+#   default = ""
+# }
 variable "react_app_h5p_key" {
   description = "react_app_h5p_key"
   type = string
@@ -407,37 +408,32 @@ variable "tsugi_admin_password" {
   default = "tsugi_admin_password"
 }
 
-variable "pgadmin_exposed_port" {
-  description = "pgadmin_exposed_port"
-  type = string
-  default = "8080"
-}
 
 
-variable "mail_username" {
-  description = "mail_username"
-  type = string
-  default = "postmaster@currikistudio.org"
-}
+# variable "mail_username" {
+#   description = "mail_username"
+#   type = string
+#   default = "postmaster@currikistudio.org"
+# }
 
-variable "mail_password" {
-  description = "mail_password"
-  type = string
-  default = "mail_password"
-}
+# variable "mail_password" {
+#   description = "mail_password"
+#   type = string
+#   default = "mail_password"
+# }
 
-variable "mail_from_address" {
-  description = "mail_from_address"
-  type = string
-  default = "info@currikistudio.org"
-}
+# variable "mail_from_address" {
+#   description = "mail_from_address"
+#   type = string
+#   default = "info@currikistudio.org"
+# }
 
 
-variable "gapi_credentials" {
-  description = "gapi_credentials"
-  type = string
-  default = "gapi_credentials"
-}
+# variable "gapi_credentials" {
+#   description = "gapi_credentials"
+#   type = string
+#   default = "gapi_credentials"
+# }
 
 variable "lrs_username" {
   description = "lrs_username"
@@ -450,5 +446,9 @@ variable "lrs_password" {
   type = string
   default = "lrs_password"
 }
-
+variable "postgres_trax_db" {
+  description = "postgres_trax_db"
+  type = string
+  default = "postgres_trax_db"
+}
 
