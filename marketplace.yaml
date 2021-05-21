@@ -23,7 +23,7 @@ variableGroups:
   - title: "Hidden Variable Group"
     visible: false
     variables:
-#"variables used internally - not exposed to end user"
+
       - tenancy_ocid
       - region
       - mp_listing_id
@@ -36,14 +36,16 @@ variableGroups:
       - network_strategy_enum
       - subnet_type_enum
       - nsg_config_enum
-      #change compute.tf and move custom_image_id to Compute group in case you want to use a custom_image
+      - app_custom_image_id
+      - db_custom_image_id
+      - es_custom_image_id
       - marketplace_source_images
 
   - title: "Compute Configuration"
     variables:
       - compartment_ocid
-      - vm_display_name
-      - hostname_label
+      # - vm_display_name
+      # - hostname_label
       - vm_compute_shape
       - vm_flex_shape_ocpus
       - availability_domain_name
@@ -60,7 +62,7 @@ variableGroups:
       - vcn_dns_label
       - vcn_cidr_block
 
-  - title: "Simple Subnet"
+  - title: "CurrikiStudio Subnet"
     visible: #($network_strategy  == ""Use Existing VCN and Subnet"") OR (network_configuration_strategy ==  "Customize Network Configuration")
       or:
         - eq:
@@ -97,7 +99,42 @@ variableGroups:
     variables:
       - tag_key_name
       - tag_value
+  
 
+  - title: "Site URL Settings"
+    variables:
+      - main_site
+      - admin_site
+      - tsugi_site
+      - lrs_site
+
+  - title: "MySQL Database Settings"
+    variables:
+      - mysql_user
+      - mysql_password
+      - mysql_root_password
+      - tsugi_database
+      - mysql_port
+      - phpmyadmin_port
+  
+  - title: "ElasticSearch Settings"
+    variables:
+      - elastic_password
+  
+  - title: "Postgres Database Settings"
+    variables:
+      - postgres_user
+      - postgres_password
+      - postgres_db
+      - postges_port
+      - postgres_lrs_db
+      - pgadmin_email
+      - pgadmin_password
+      - pgadmin_port
+      
+  - title: "Other Settings"
+    variables:
+      - react_app_pexel_api
 
 ######################################################
 ##############          VARIABLES        #############
@@ -233,11 +270,11 @@ variables:
     title: Public SSH Key string
     description: Public SSH Key to access VM via SSH
 
-  vm_display_name:
-    type: string
-    required: true
-    title: Instance Name
-    description: The name of the Instance
+  # vm_display_name:
+  #   type: string
+  #   required: true
+  #   title: Instance Name
+  #   description: The name of the Instance
 
   vm_compute_shape:
     type: oci:core:instanceshape:name
@@ -260,10 +297,10 @@ variables:
     maximum: 64
     required: false
 
-  hostname_label:
-    type: string
-    required: false
-    title: DNS Hostname Label
+  # hostname_label:
+  #   type: string
+  #   required: false
+  #   title: DNS Hostname Label
 
 
 ######################################################
@@ -492,6 +529,129 @@ variables:
     default: "0.0.0.0/0"
     title: Allowed Ingress Traffic (CIDR Block)
 
+  main_site:
+    type: string
+    required: true
+    title: Main Site
+    description: Main Site URL
+  
+  admin_site:
+    type: string
+    required: true
+    title: Admin Site
+    description: Admin Site URL
+  
+  tsugi_site:
+    type: string
+    required: true
+    title: Tsugi Site
+    description: Tsugi Site URL
+  
+  lrs_site:
+    type: string
+    required: true
+    title: LRS Site
+    description: LRS Site URL
+
+  mysql_user:
+    type: string
+    required: true
+    title: MySQL User
+    description: MySQL User
+
+  mysql_password:
+    type: string
+    required: true
+    title: MySQL Password
+    description: MySQL Password
+  
+  mysql_root_password:
+    type: string
+    required: true
+    title: MySQL Root Password
+    description: MySQL Root Password
+
+  tsugi_database:
+    type: string
+    required: true
+    title: Tsugi Database Name
+    description: Tsugi Database Name
+
+  mysql_port:
+    type: string
+    required: true
+    title: MySQL Port
+    description: MySQL Port
+  
+  phpmyadmin_port:
+    type: string
+    required: true
+    title: PhpMyAdmin Port
+    description: PhpMyAdmin Port
+
+  elastic_password:
+    type: string
+    required: true
+    title: ElasticSearch Password
+    description: ElasticSearch Password
+
+  postgres_user:
+    type: string
+    required: true
+    title: Postgres User
+    description: Postgres User
+
+  postgres_password:
+    type: string
+    required: true
+    title: Postgres Password
+    description: Postgres Password
+
+  postgres_db:
+    type: string
+    required: true
+    title: Postgres Main DB
+    description: Postgres Main DB
+
+  postges_port:
+    type: string
+    required: true
+    title: postges_port
+    description: Postgres Port
+
+  postgres_lrs_db:
+    type: string
+    required: true
+    title: Postgres LRS DB
+    description: Postgres LRS DB Name
+
+  pgadmin_email:
+    type: string
+    required: true
+    title: PgAdmin Email
+    description: PgAdmin Email
+
+  pgadmin_password:
+    type: string
+    required: true
+    title: PGAdmin Password
+    description: PGAdmin Password
+
+  pgadmin_port:
+    type: string
+    required: true
+    title: PGAdmin Port
+    description: PGAdmin Port
+
+  react_app_pexel_api:
+    type: string
+    required: true
+    title: React App Pexel API
+    description: React App Pexel API
+    
+
+    
+    
 
 
 

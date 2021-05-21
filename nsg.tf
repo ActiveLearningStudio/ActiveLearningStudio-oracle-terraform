@@ -204,8 +204,8 @@ resource "oci_core_network_security_group_security_rule" "db_rule_postgres_ingre
 
   tcp_options {
     destination_port_range {
-      min = var.postges_exposed_port
-      max = var.postges_exposed_port
+      min = var.postges_port
+      max = var.postges_port
     }
   }
 }
@@ -221,8 +221,8 @@ resource "oci_core_network_security_group_security_rule" "db_rule_pgadmin_ingres
 
   tcp_options {
     destination_port_range {
-      min = var.pgadmin_exposed_port
-      max = var.pgadmin_exposed_port
+      min = var.pgadmin_port
+      max = var.pgadmin_port
     }
   }
 }
@@ -238,8 +238,8 @@ resource "oci_core_network_security_group_security_rule" "db_rule_phpmyadmin_ing
 
   tcp_options {
     destination_port_range {
-      min = var.phpmyadmin_exposed_port
-      max = var.phpmyadmin_exposed_port
+      min = var.phpmyadmin_port
+      max = var.phpmyadmin_port
     }
   }
 }

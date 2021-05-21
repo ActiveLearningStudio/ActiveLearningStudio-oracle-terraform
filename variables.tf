@@ -52,7 +52,7 @@ variable "mp_listing_resource_version" {
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaaq2i72jp3pzixxeyh7n5oxhd2gnd4ji5todacgywo75bocsi22ehq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaabkae34pjddivar2b7gdxrbtocwi2npstrp3hbr74jwesu3wljzqq"
   description = "APP Image OCID"
 }
 variable "db_custom_image_id" {
@@ -68,10 +68,10 @@ variable "es_custom_image_id" {
 #  Compute Configuration   #
 ############################
 
-variable "vm_display_name" {
-  description = "Instance Name"
-  default     = "simple-vm"
-}
+# variable "vm_display_name" {
+#   description = "Instance Name"
+#   default     = "simple-vm"
+# }
 
 variable "vm_compute_shape" {
   description = "Compute Shape"
@@ -98,10 +98,10 @@ variable "ssh_public_key" {
   description = "SSH Public Key"
 }
 
-variable "hostname_label" {
-  default     = "simple"
-  description = "DNS Hostname Label. Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 1123."
-}
+# variable "hostname_label" {
+#   default     = "simple"
+#   description = "DNS Hostname Label. Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 1123."
+# }
 
 ############################
 #  Network Configuration   #
@@ -212,12 +212,12 @@ variable "compartment_ocid" {
 
 variable "tag_key_name" {
   description = "Free-form tag key name"
-  default     = "oracle-quickstart"
+  default     = "curriki-studio"
 }
 
 variable "tag_value" {
   description = "Free-form tag value"
-  default     = "oci-quickstart-template"
+  default     = "curriki-studio-application"
 }
 
 
@@ -248,18 +248,6 @@ variable "nsg_config_enum" {
     CUSTOMIZE       = "Customize ports - Post deployment"
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -306,12 +294,18 @@ variable "tsugi_database" {
   type = string
   default = "tsugi_database"
 }
+variable "tsugi_admin_password" {
+  description = "Admin Password for tsugi (Login with https://oracle-tsugi.example.com)"
+  type = string
+  default = "tsugi_admin_password"
+}
+
 variable "mysql_port" {
   description = "MySQL Port"
   type = string
   default = "3307"
 }
-variable "phpmyadmin_exposed_port" {
+variable "phpmyadmin_port" {
   description = "PhpMyAdmin Port (http://ip-of-database-instance:7000)"
   type = string
   default = "7000"
@@ -339,30 +333,30 @@ variable "postgres_db" {
   default = "postgres_db"
 }
 
-variable "postges_exposed_port" {
+variable "postges_port" {
   description = "Postgres Database port"
   type = string
   default = "5434"
 }
 
-variable "postgres_trax_db" {
+variable "postgres_lrs_db" {
   description = "Name of Trax Database"
   type = string
-  default = "postgres_trax_db"
+  default = "postgres_lrs_db"
 }
 
 
-variable "pgadmin_default_email" {
+variable "pgadmin_email" {
   description = "PGAdmin Email"
   type = string
   default = "admin@example.com"
 }
-variable "pgadmin_default_password" {
+variable "pgadmin_password" {
   description = "PGAdmin Password"
   type = string
-  default = "pgadmin_default_password"
+  default = "pgadmin_password"
 }
-variable "pgadmin_exposed_port" {
+variable "pgadmin_port" {
   description = "Expose IP of pgadmin to http (http://ip-of-database-instance:8080)"
   type = string
   default = "8080"
@@ -372,11 +366,5 @@ variable "react_app_pexel_api" {
   description = "react_app_pexel_api"
   type = string
   default = "563492ad6f91700001000001155d7b75f5424ea694b81ce9f867dddf"
-}
-
-variable "tsugi_admin_password" {
-  description = "Admin Password for tsugi (Login with https://oracle-tsugi.example.com)"
-  type = string
-  default = "tsugi_admin_password"
 }
 
