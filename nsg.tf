@@ -254,8 +254,8 @@ resource "oci_core_network_security_group_security_rule" "db_rule_mysql_ingress"
 
   tcp_options {
     destination_port_range {
-      min = var.mysql_local_port
-      max = var.mysql_local_port
+      min = var.mysql_port
+      max = var.mysql_port
     }
   }
 }

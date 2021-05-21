@@ -52,11 +52,11 @@ variable "mp_listing_resource_version" {
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaapzm263v5jr5phsoxxmrzbjtm6jznariupib7wrrsp35jfjmuxnga"
+  default     = "ocid1.image.oc1.iad.aaaaaaaaq2i72jp3pzixxeyh7n5oxhd2gnd4ji5todacgywo75bocsi22ehq"
   description = "APP Image OCID"
 }
 variable "db_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaakmglx2ti2k2luvpaktd4hg3qtpezf3jvzxcaoaiauzpvie622twa"
+  default     = "ocid1.image.oc1.iad.aaaaaaaaiuu4sginz2xa7szsrdz67wtiyrs3437liujay26dkcbhkzdsjddq"
   description = "DB Image OCID"
 }
 variable "es_custom_image_id" {
@@ -264,191 +264,119 @@ variable "nsg_config_enum" {
 
 
 
-variable "terraform_site" {
-  description = "terraform_site"
+variable "main_site" {
+  description = "Main Site URL"
   type = string
-  default = "oracle.currikistudio.org"
+  default = "oracle.example.com"
 }
-variable "terraform_admin_site" {
-  description = "terraform_admin_site"
+variable "admin_site" {
+  description = "Admin Site URL"
   type = string
-  default = "oracle-admin.currikistudio.org"
+  default = "oracle-admin.example.com"
 }
-variable "terraform_tsugi_site" {
-  description = "terraform_tsugi_site"
+variable "tsugi_site" {
+  description = "Tsugi Site URL"
   type = string
-  default = "oracle-tsugi.currikistudio.org"
+  default = "oracle-tsugi.example.com"
 }
-variable "terraform_trax_site" {
-  description = "terraform_trax_site"
+variable "lrs_site" {
+  description = "LRS Site URL"
   type = string
-  default = "oracle-trax.currikistudio.org"
-}
-variable "instance_display_name" {
-  description = "instance_display_name"
-  type = string
-  default = "Curriki App Instance"
-}
-variable "db_instance_display_name" {
-  description = "db_instance_display_name"
-  type = string
-  default = "Curriki DB Instance"
-}
-variable "es_instance_display_name" {
-  description = "es_instance_display_name"
-  type = string
-  default = "Curriki Elastic Instance"
+  default = "oracle-trax.example.com"
 }
 
-variable "mysql_database" {
-  description = "mysql_database"
-  type = string
-  default = "mysql_database"
-}
+
 variable "mysql_user" {
-  description = "mysql_user"
+  description = "MySQL User Name"
   type = string
   default = "mysql_user"
 }
 variable "mysql_password" {
-  description = "mysql_password"
+  description = "Password for MySQL User"
   type = string
   default = "mysql_password"
 }
 variable "mysql_root_password" {
-  description = "mysql_root_password"
+  description = "MySQL Root User password"
   type = string
   default = "mysql_root_password"
 }
-variable "mysql_local_port" {
-  description = "mysql_local_port"
+variable "tsugi_database" {
+  description = "Tsugi Database Name"
+  type = string
+  default = "tsugi_database"
+}
+variable "mysql_port" {
+  description = "MySQL Port"
   type = string
   default = "3307"
 }
 variable "phpmyadmin_exposed_port" {
-  description = "phpmyadmin_exposed_port"
+  description = "PhpMyAdmin Port (http://ip-of-database-instance:7000)"
   type = string
   default = "7000"
 }
 
 variable "elastic_password" {
-  description = "elastic_password"
+  description = "ElasticSearch Password"
   type = string
   default = "elastic_password"
 }
 
 variable "postgres_user" {
-  description = "postgres_user"
+  description = "Postgres User"
   type = string
   default = "postgres_user"
 }
 variable "postgres_password" {
-  description = "postgres_password"
+  description = "Postgres Password"
   type = string
   default = "postgres_password"
 }
 variable "postgres_db" {
-  description = "postgres_db"
+  description = "Postgres Database"
   type = string
   default = "postgres_db"
 }
 
 variable "postges_exposed_port" {
-  description = "postges_exposed_port"
+  description = "Postgres Database port"
   type = string
   default = "5434"
 }
 
-variable "pgadmin_default_email" {
-  description = "pgadmin_default_email"
+variable "postgres_trax_db" {
+  description = "Name of Trax Database"
   type = string
-  default = "admin@currikistudio.org"
+  default = "postgres_trax_db"
+}
+
+
+variable "pgadmin_default_email" {
+  description = "PGAdmin Email"
+  type = string
+  default = "admin@example.com"
 }
 variable "pgadmin_default_password" {
-  description = "pgadmin_default_password"
+  description = "PGAdmin Password"
   type = string
   default = "pgadmin_default_password"
 }
 variable "pgadmin_exposed_port" {
-  description = "pgadmin_exposed_port"
+  description = "Expose IP of pgadmin to http (http://ip-of-database-instance:8080)"
   type = string
   default = "8080"
 }
-
 
 variable "react_app_pexel_api" {
   description = "react_app_pexel_api"
   type = string
   default = "563492ad6f91700001000001155d7b75f5424ea694b81ce9f867dddf"
 }
-# variable "react_app_google_captcha" {
-#   description = "react_app_google_captcha"
-#   type = string
-#   default = ""
-# }
-# variable "react_app_gapi_client_id" {
-#   description = "react_app_gapi_client_id"
-#   type = string
-#   default = ""
-# }
-# variable "react_app_hubpot" {
-#   description = "react_app_hubpot"
-#   type = string
-#   default = ""
-# }
-variable "react_app_h5p_key" {
-  description = "react_app_h5p_key"
-  type = string
-  default = "B6TFsmFD5TLZaWCAYZ91ly0D2We0xjLAtRmBJzQ"
-}
 
 variable "tsugi_admin_password" {
-  description = "tsugi_admin_password"
+  description = "Admin Password for tsugi (Login with https://oracle-tsugi.example.com)"
   type = string
   default = "tsugi_admin_password"
-}
-
-
-
-# variable "mail_username" {
-#   description = "mail_username"
-#   type = string
-#   default = "postmaster@currikistudio.org"
-# }
-
-# variable "mail_password" {
-#   description = "mail_password"
-#   type = string
-#   default = "mail_password"
-# }
-
-# variable "mail_from_address" {
-#   description = "mail_from_address"
-#   type = string
-#   default = "info@currikistudio.org"
-# }
-
-
-# variable "gapi_credentials" {
-#   description = "gapi_credentials"
-#   type = string
-#   default = "gapi_credentials"
-# }
-
-# variable "lrs_username" {
-#   description = "lrs_username"
-#   type = string
-#   default = "lrs_username"
-# }
-
-# variable "lrs_password" {
-#   description = "lrs_password"
-#   type = string
-#   default = "lrs_password"
-# }
-variable "postgres_trax_db" {
-  description = "postgres_trax_db"
-  type = string
-  default = "postgres_trax_db"
 }
 

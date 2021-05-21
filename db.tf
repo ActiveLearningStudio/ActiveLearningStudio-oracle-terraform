@@ -15,7 +15,7 @@ resource "oci_core_instance" "db_instance" {
         }
     }
     # Optional
-    display_name = var.db_instance_display_name
+    display_name = "CurrikiStudio Database"
     create_vnic_details {
         assign_public_ip = false
         subnet_id = local.use_existing_network ? var.db_subnet_id : oci_core_subnet.curriki_db_subnet[0].id
@@ -143,11 +143,11 @@ resource "null_resource" "db-scripts" {
            "sudo mkdir -p /mnt/DBData/currikiprod1-postgresdata",
           "sudo mkdir -p /mnt/DBData/currikiprod1-mysqldata",
           "sudo mkdir -p /mnt/DBData/pgadmin1-data",
-           "sed -i 's/substitute-mysql-database/${var.mysql_database}/g' ~/curriki-db/.env.example",
+           "sed -i 's/substitute-mysql-database/${var.tsugi_database}/g' ~/curriki-db/.env.example",
            "sed -i 's/substitute-mysql-user/${var.mysql_user}/g' ~/curriki-db/.env.example",
            "sed -i 's/substitute-mysql-password/${var.mysql_password}/g' ~/curriki-db/.env.example",
            "sed -i 's/substitute-mysql-root-password/${var.mysql_root_password}/g' ~/curriki-db/.env.example",
-           "sed -i 's/substitute-mysql-local-port/${var.mysql_local_port}/g' ~/curriki-db/.env.example",
+           "sed -i 's/substitute-mysql-local-port/${var.mysql_port}/g' ~/curriki-db/.env.example",
            "sed -i 's/substitute-local-db-ip-address/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' ~/curriki-db/.env.example",
            "sed -i 's/substitute-pgadmin-default-email/${var.pgadmin_default_email}/g' ~/curriki-db/.env.example",
            "sed -i 's/substitute-pgadmin-default-password/${var.pgadmin_default_password}/g' ~/curriki-db/.env.example",

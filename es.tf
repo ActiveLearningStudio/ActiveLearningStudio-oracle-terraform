@@ -15,7 +15,7 @@ resource "oci_core_instance" "es_instance" {
         }
     }
     # Optional
-    display_name = var.es_instance_display_name
+    display_name = "CurrikiStudio ElasticSearch"
     create_vnic_details {
         assign_public_ip = false
         display_name = "esvnic"
