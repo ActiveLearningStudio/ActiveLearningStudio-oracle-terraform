@@ -7,7 +7,7 @@ version: "20190304"
 
 # URL of Logo Icon used on Application Information tab. You can copy the contentId from the Marketplace listing logo URL in the Marketplace Partner portal.
 # (Optional)
-logoUrl: https://cloudmarketplace.oracle.com/marketplace/content?contentId=71617800
+logoUrl: https://www.currikistudio.org/static/media/logo.e4118a3b.svg
 
 # Used in Application Information tab to Hyperlink Title and Logo to the Marketplace
 # Listing.

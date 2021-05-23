@@ -253,22 +253,22 @@ variable "nsg_config_enum" {
 
 
 variable "main_site" {
-  description = "Main Site URL"
+  description = "Main Site URL (Must not start with http or https)"
   type = string
   default = "oracle.example.com"
 }
 variable "admin_site" {
-  description = "Admin Site URL"
+  description = "Admin Site URL (Must not start with http or https)"
   type = string
   default = "oracle-admin.example.com"
 }
 variable "tsugi_site" {
-  description = "Tsugi Site URL"
+  description = "Tsugi Site URL (Must not start with http or https)"
   type = string
   default = "oracle-tsugi.example.com"
 }
 variable "lrs_site" {
-  description = "LRS Site URL"
+  description = "LRS Site URL (Must not start with http or https)"
   type = string
   default = "oracle-trax.example.com"
 }
