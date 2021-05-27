@@ -4,7 +4,7 @@ resource "oci_core_instance" "es_instance" {
     compartment_id = var.compartment_ocid
     shape = var.vm_compute_shape
     source_details {
-        source_id = var.es_custom_image_id
+        source_id = local.es_custom_image_id
         source_type = "image"
     }
 

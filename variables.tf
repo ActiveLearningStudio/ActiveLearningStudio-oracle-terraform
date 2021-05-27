@@ -13,39 +13,76 @@ variable "region" {
 ###############################################################################
 #  Marketplace Image Listing - information available in the Partner portal    #
 ###############################################################################
-variable "mp_subscription_enabled" {
-  description = "Subscribe to Marketplace listing?"
+variable "mp_app_subscription_enabled" {
+  description = "Subscribe to Marketplace listing APP?"
   type        = bool
-  default     = false
+  default     = true
 }
 
-variable "mp_listing_id" {
+variable "mp_db_subscription_enabled" {
+  description = "Subscribe to Marketplace listing DB?"
+  type        = bool
+  default     = true
+}
+
+variable "mp_es_subscription_enabled" {
+  description = "Subscribe to Marketplace listing ES?"
+  type        = bool
+  default     = true
+}
+
+variable "mp_app_listing_id" {
   // default = "ocid1.appcataloglisting.oc1.."
-  default     = ""
-  description = "Marketplace Listing OCID"
+  default     = "ocid1.appcataloglisting.oc1..aaaaaaaagwlhiykamroczsyg7rfmlbvooukzzktbuwjmrfhsvj4n6aicvi2a"
+  description = "Marketplace Listing OCID APP"
+}
+variable "mp_db_listing_id" {
+  // default = "ocid1.appcataloglisting.oc1.."
+  default     = "ocid1.appcataloglisting.oc1..aaaaaaaa4nhy27bmgtefpefbmj542y3exv3kjvasdauy6oqxgshqfxtt26bq"
+  description = "Marketplace Listing OCID DB"
+}
+
+// Fix this
+variable "mp_es_listing_id" {
+  // default = "ocid1.appcataloglisting.oc1.."
+  default     = "ocid1.appcataloglisting.oc1..aaaaaaaatqzpulfswejwvpujwhqlsgsvu6qt6i43am5edpbfoknizuozmnka"
+  description = "Marketplace Listing OCID ES"
 }
 
 variable "mp_listing_resource_app_id" {
   // default = "ocid1.image.oc1.."
-  default     = ""
+  default     = "ocid1.image.oc1..aaaaaaaaltpvosxplkutnd4ulqauo5cvm25bs6bfxvddfa5fm6k4bkqv6voa"
   description = "Marketplace Listing Image APP OCID"
 }
 
 variable "mp_listing_resource_db_id" {
   // default = "ocid1.image.oc1.."
-  default     = ""
+  default     = "ocid1.image.oc1..aaaaaaaayj4cbyhgmgww4h55llswtt3mtgmzf7lhvsinio4grgvri3pcrkvq"
   description = "Marketplace Listing Image DB OCID"
 }
 variable "mp_listing_resource_es_id" {
   // default = "ocid1.image.oc1.."
-  default     = ""
+  default     = "ocid1.image.oc1..aaaaaaaaxy6uy3oab2q5pc4fjhzineeesmgcyvba265xabmkx2tqou73x4dq"
   description = "Marketplace Listing Image ES OCID"
 }
 
-variable "mp_listing_resource_version" {
+variable "mp_app_listing_resource_version" {
   // default = "1.0"
-  default     = ""
-  description = "Marketplace Listing Package/Resource Version"
+  default     = "v1.0.0"
+  description = "Marketplace Listing Package/Resource Version APP"
+}
+
+
+variable "mp_db_listing_resource_version" {
+  // default = "1.0"
+  default     = "v1.0.0"
+  description = "Marketplace Listing Package/Resource Version DB"
+}
+
+variable "mp_es_listing_resource_version" {
+  // default = "1.0"
+  default     = "v1.0.0"
+  description = "Marketplace Listing Package/Resource Version ES"
 }
 
 ############################
@@ -56,7 +93,7 @@ variable "app_custom_image_id" {
   description = "APP Image OCID"
 }
 variable "db_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaavhzgzgmmpk2x7asj5d2bfxwvrnfv7co3l6sqp45fvamyuuyydpqq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaawlf3e7vqyrpfdf6ceflcusfe5idzc6ymsaf7pjsx3bnuzhigdwsq"
   description = "DB Image OCID"
 }
 variable "es_custom_image_id" {
@@ -118,7 +155,7 @@ variable "vcn_id" {
 
 variable "vcn_display_name" {
   description = "VCN Name"
-  default     = "simple-vcn"
+  default     = "curriki-vcn"
 }
 
 variable "vcn_cidr_block" {
@@ -128,7 +165,7 @@ variable "vcn_cidr_block" {
 
 variable "vcn_dns_label" {
   description = "VCN DNS Label"
-  default     = "simplevcn"
+  default     = "currikivcn"
 }
 
 variable "subnet_type" {

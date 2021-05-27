@@ -36,6 +36,13 @@ output "nsg_id" {
 # image_subscription.tf outputs
 ###
 
-output "subscription" {
-  value = data.oci_core_app_catalog_subscriptions.mp_image_subscription.*.app_catalog_subscriptions
+output "app_subscription" {
+  value = data.oci_core_app_catalog_subscriptions.mp_app_image_subscription.*.app_catalog_subscriptions
+}
+
+output "db_subscription" {
+  value = data.oci_core_app_catalog_subscriptions.mp_db_image_subscription.*.app_catalog_subscriptions
+}
+output "es_subscription" {
+  value = data.oci_core_app_catalog_subscriptions.mp_es_image_subscription.*.app_catalog_subscriptions
 }

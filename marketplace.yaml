@@ -1,22 +1,22 @@
 # Title shown in Application Information tab.
 title: CurrikiStudio Marketplace Stack
-# Sub Title shown in Application Information tab.
+# Sub Title shown in Application Information tab. (Update this description)
 description: This is CurrikiStudio Marketplace Stack
 schemaVersion: 1.1.0
 version: "20190304"
 
 # URL of Logo Icon used on Application Information tab. You can copy the contentId from the Marketplace listing logo URL in the Marketplace Partner portal.
-# (Optional)
-logoUrl: https://www.currikistudio.org/static/media/logo.e4118a3b.svg
+# (Optional) (Update Logo)
+logoUrl: https://cloudmarketplace.oracle.com/marketplace/content?contentId=100771839
 
 # Used in Application Information tab to Hyperlink Title and Logo to the Marketplace
 # Listing.
 # Also used to link to Listing Usage section for "View Instructions".
 # (Optional) If it is missing, Application Information uses the
-# "marketplace-listing-id" tag for the same purpose.
+# "marketplace-listing-id" tag for the same purpose. (Update this)
 source:
   type: marketplace
-  reference: 12345
+  reference: 100675093
 
 locale: "en"
 variableGroups:
@@ -26,13 +26,19 @@ variableGroups:
 
       - tenancy_ocid
       - region
-      - mp_listing_id
+      - mp_app_listing_id
+      - mp_db_listing_id
+      - mp_es_listing_id
       - mp_listing_resource_app_id
       - mp_listing_resource_db_id
       - mp_listing_resource_es_id
-      - mp_listing_resource_version
+      - mp_app_listing_resource_version
+      - mp_db_listing_resource_version
+      - mp_es_listing_resource_version
+      - mp_app_subscription_enabled
+      - mp_db_subscription_enabled
+      - mp_es_subscription_enabled
       - availability_domain_number
-      - mp_subscription_enabled
       - network_strategy_enum
       - subnet_type_enum
       - nsg_config_enum
@@ -40,6 +46,7 @@ variableGroups:
       - db_custom_image_id
       - es_custom_image_id
       - marketplace_source_images
+      - react_app_pexel_api
 
   - title: "Compute Configuration"
     variables:
@@ -114,6 +121,7 @@ variableGroups:
       - mysql_password
       - mysql_root_password
       - tsugi_database
+      - tsugi_admin_password
       - mysql_port
       - phpmyadmin_port
   
@@ -132,9 +140,9 @@ variableGroups:
       - pgadmin_password
       - pgadmin_port
       
-  - title: "Other Settings"
-    variables:
-      - react_app_pexel_api
+  # - title: "Other Settings"
+  #   variables:
+  #     - react_app_pexel_api
 
 ######################################################
 ##############          VARIABLES        #############
@@ -169,10 +177,20 @@ variables:
 ##############   MARKETPLACE VARIABLES   #############
 ######################################################
 
-  mp_listing_id:
+  mp_app_listing_id:
     type: string
     required: true
-    description: Marketplace Listing ID
+    description: Marketplace Listing APP ID
+
+  mp_db_listing_id:
+    type: string
+    required: true
+    description: Marketplace Listing DB ID
+
+  mp_es_listing_id:
+    type: string
+    required: true
+    description: Marketplace Listing ElasticSearch ID
 
   mp_listing_resource_app_id:
     type: oci:core:image:id
@@ -195,18 +213,35 @@ variables:
     dependsOn:
       compartmentId: compartment_ocid
 
-
-
-  mp_listing_resource_version:
+  mp_app_listing_resource_version:
     type: string
     required: true
-    description: Marketplace Listing package version
+    description: Marketplace Listing package version App
 
+  mp_db_listing_resource_version:
+    type: string
+    required: true
+    description: Marketplace Listing package version DB
 
-  mp_subscription_enabled:
+  mp_es_listing_resource_version:
+    type: string
+    required: true
+    description: Marketplace Listing package version ElasticSearch
+
+  mp_app_subscription_enabled:
     type: boolean
     title: Use Marketplace Image?
-    default: false
+    default: true
+
+  mp_db_subscription_enabled:
+    type: boolean
+    title: Use Marketplace Image?
+    default: true
+
+  mp_es_subscription_enabled:
+    type: boolean
+    title: Use Marketplace Image?
+    default: true
 
   app_custom_image_id:
     type: string
@@ -576,6 +611,12 @@ variables:
     required: true
     title: Tsugi Database Name
     description: Tsugi Database Name
+
+  tsugi_admin_password:
+    type: string
+    required: true
+    title: Tsugi Admin Password
+    description: Admin Password for tsugi (Login with https://oracle-tsugi.example.com)
 
   mysql_port:
     type: string
