@@ -47,7 +47,16 @@ Our Oracle Infrastructure is composed of three Linux VMs.
 
 # Installation
 
-## Database VM
+## Get App from Marketplace
+
+Click on Get App Button on Oracle Marketplace
+
+![Installation](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack1.png)
+
+## Get App from Marketplace
+![Installation](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack2.png)
+
+# Database VM
 
 Install [docker compose](https://docs.docker.com/compose/install/)
 
