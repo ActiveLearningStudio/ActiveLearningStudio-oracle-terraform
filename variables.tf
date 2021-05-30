@@ -45,7 +45,7 @@ variable "mp_db_listing_id" {
 // Fix this
 variable "mp_es_listing_id" {
   // default = "ocid1.appcataloglisting.oc1.."
-  default     = "ocid1.appcataloglisting.oc1..aaaaaaaatqzpulfswejwvpujwhqlsgsvu6qt6i43am5edpbfoknizuozmnka"
+  default     = "ocid1.appcataloglisting.oc1..aaaaaaaansir6c3sma3zrcnpdiqrcz4mj6egjakai55u2ttnjhleh7a5ccrq"
   description = "Marketplace Listing OCID ES"
 }
 

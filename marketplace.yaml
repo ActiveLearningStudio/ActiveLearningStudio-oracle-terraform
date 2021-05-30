@@ -1,22 +1,21 @@
 # Title shown in Application Information tab.
 title: CurrikiStudio Marketplace Stack
-# Sub Title shown in Application Information tab. (Update this description)
-description: This is CurrikiStudio Marketplace Stack
-schemaVersion: 1.1.0
-version: "20190304"
+# Sub Title shown in Application Information tab.
+description: This stack launches Application, Database and ElasticSearch instances for CurrikiStudio - Free and open technology to create interactive learning experiences
+schemaVersion: 1.0.0
+version: "20210528"
 
 # URL of Logo Icon used on Application Information tab. You can copy the contentId from the Marketplace listing logo URL in the Marketplace Partner portal.
-# (Optional) (Update Logo)
-logoUrl: https://cloudmarketplace.oracle.com/marketplace/content?contentId=100771839
+logoUrl: https://cloudmarketplace.oracle.com/marketplace/content?contentId=100863982
 
 # Used in Application Information tab to Hyperlink Title and Logo to the Marketplace
 # Listing.
 # Also used to link to Listing Usage section for "View Instructions".
 # (Optional) If it is missing, Application Information uses the
-# "marketplace-listing-id" tag for the same purpose. (Update this)
+# "marketplace-listing-id" tag for the same purpose.
 source:
   type: marketplace
-  reference: 100675093
+  reference: 100863852
 
 locale: "en"
 variableGroups:
