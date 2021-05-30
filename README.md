@@ -53,31 +53,26 @@ Click on Get App Button on Oracle Marketplace
 
 ![Installation](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack1.png)
 
-## Get App from Marketplace
-![Installation](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack2.png)
+## Enter OCI Variables
 
-# Database VM
+Choose compartment, compute shapes, Availability Domain, Paste public keys (to connect to intances), VCN Settings
 
-Install [docker compose](https://docs.docker.com/compose/install/)
+![OCI Variables](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack2.png)
 
-Run following commands
+Choose site urls settings like on which URL you want your studio to setup. Here you must provide all of your sites like (main site, admin site, tsugi site, trax site)
 
-    git clone https://github.com/ActiveLearningStudio/ActiveLearningStudio-docker-db.git curriki-db
-	cd curriki-db
-	cp .env.example .env
-	sudo mkdir -p /mnt/DBData/currikiprod1-mysqldata
-	sudo mkdir -p /mnt/DBData/currikiprod1-postgresdata
-	sudo mkdir -p /mnt/DBData/pgadmin1-data
-	sudo docker-compose up -d
+![Site URLs settings](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack3.png)
 
-## Elastic VM
 
-Currently elastic search is manual installation so you should following internet according to your environment
+Enter MySQL Settings (MySQL is used with Tsugi), like passwords, ports. We are also setting up PhpMyAdmin with MySQl so that you can use GUI
 
-### For Ubuntu 
-[https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-18-04)
+![MySQL Settings](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack4.png)
 
-### For CentOS 7
+Enter ElasticSearch and postgres settings like username and passwords
+
+![MySQL Settings](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack5.png)
+
+### Installation of https and other settings
 
 [https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-centos-7](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-centos-7)
 
