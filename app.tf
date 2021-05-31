@@ -101,6 +101,7 @@ resource "oci_core_volume_attachment" "app_volume_attachment" {
         user        = "opc"
         # private_key = file("~/.ssh/id_rsa")
         private_key = tls_private_key.public_private_key_pair.private_key_pem
+        timeout = 1800
     }
     # register and connect the iSCSI block volume
   provisioner "remote-exec" {
@@ -281,6 +282,7 @@ resource "null_resource" "studio-script" {
              user        = "opc"
              private_key = tls_private_key.public_private_key_pair.private_key_pem
              host = oci_core_public_ip.ReservedAppPublicIP.ip_address
+             timeout = 1800
          } 
      }
  }
