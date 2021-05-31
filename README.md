@@ -72,15 +72,10 @@ Enter ElasticSearch and postgres settings like username and passwords
 
 ![MySQL Settings](https://raw.githubusercontent.com/ActiveLearningStudio/ActiveLearningStudio-oracle-terraform/master/images/stack5.png)
 
-### Installation of https and other settings
 
-[https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-centos-7](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-centos-7)
+## Add DNS records
 
-## Application VM
-
-### Add DNS records
-
-1. Copy public ip of the VM and put inside the DNS records like this.
+1. Copy public ip of the application server and put inside the DNS records like this.
 
 Say public ip of your VM is 132.226.36.47
 
@@ -93,18 +88,19 @@ You must create these A records like
 
 This step is necessary to generate letsencrypt certificate which will be discussed later in this section
 
-### Clone Main Repo into some folder
 
-    git clone https://github.com/ActiveLearningStudio/ActiveLearningStudio-docker-containers.git curriki
-	cd curriki
+### Installation of https and other settings
 
-Change the values of setup.example.sh variables and run it (The purpose of the setup.example.sh file is to replace all the configuration variables inside the application according to your environment)
-	
-	sudo ./setup.example.sh
-	sudo docker swarm init
-	sudo ./init-letsencrypt.sh
+Note: Add DNS Record is must for generating SSL
 
-init-letsencrypt.sh will generate a certificate and attach to your installation
+Once stack has been successfully run, you need to ssh into the application server. (You can get ip from outputs)
 
-Once this is run succesfully without errors your studio applicaiton will be on https://example.currikistudio.org
+> ssh opc@ip-of-application-server
+> cd /curriki
+
+Run init-generate-ssl.sh file with sudo rights. It will ask few different parameters like email, smtp details etc. (Leave blank if you dont know yet. They can be manually configurable later)
+
+> sudo ./init-generate-ssl.sh
+This will generate ssl from letsencrypt
+
 
