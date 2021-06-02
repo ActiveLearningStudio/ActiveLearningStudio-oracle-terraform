@@ -76,7 +76,7 @@ resource "null_resource" "es-scripts" {
              user        = "opc"
             private_key = tls_private_key.public_private_key_pair.private_key_pem
              host = oci_core_public_ip.ReservedESPublicIP.ip_address
-             timeout = 1800
+             timeout = "30m"
          } 
      }
  }
