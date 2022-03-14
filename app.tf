@@ -21,7 +21,7 @@ resource "oci_core_instance" "oracle_instance" {
     # public_ip = oci_core_public_ip.test_public_ip
 
     # Optional
-    display_name = "CurrikiStudio App"
+    display_name = "Market Test App"
     create_vnic_details {
         assign_public_ip = false
         display_name = "studiovnic"
@@ -262,6 +262,7 @@ resource "null_resource" "studio-script" {
 
 
             #Installing
+            "sudo docker swarm init",
             "sudo docker stack deploy --compose-file /curriki/docker-compose.yml currikistack",
             " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ')",
             " while [ \"$up\" != \"1/1\" ] ",

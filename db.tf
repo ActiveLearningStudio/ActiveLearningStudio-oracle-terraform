@@ -15,7 +15,7 @@ resource "oci_core_instance" "db_instance" {
         }
     }
     # Optional
-    display_name = "CurrikiStudio Database"
+    display_name = "Market Test Database"
     create_vnic_details {
         assign_public_ip = false
         subnet_id = local.use_existing_network ? var.db_subnet_id : oci_core_subnet.curriki_db_subnet[0].id
