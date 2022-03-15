@@ -5,12 +5,12 @@
 output "app_instance_ip" {
   value = oci_core_public_ip.ReservedAppPublicIP.ip_address
 }
-output "db_instance_ip" {
+/**output "db_instance_ip" {
   value = oci_core_public_ip.ReservedDBPublicIP.ip_address
-}
-output "es_instance_ip" {
+} */
+/**output "es_instance_ip" {
   value = oci_core_public_ip.ReservedESPublicIP.ip_address
-}
+} */
 
 ###
 # network.tf outputs

@@ -196,13 +196,13 @@ resource "null_resource" "studio-script" {
             "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/api/.env",
             
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/api/.env",
-            "sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/api/.env",
+            #"sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-port/${var.postges_port}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/api/.env",
             "sed -i 's/substitute-lrs-db-database/${var.postgres_lrs_db}/g' /curriki/api/.env",
-            "sed -i 's/substitute-elastic-host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g' /curriki/api/.env",
+            #"sed -i 's/substitute-elastic-host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g' /curriki/api/.env",
             
             "sed -i 's/substitute-elastic-user/elastic/g' /curriki/api/.env",
             "sed -i 's/substitute-elastic-password/${var.elastic_password}/g' /curriki/api/.env",
@@ -239,7 +239,7 @@ resource "null_resource" "studio-script" {
             "cp /curriki/trax-lrs/.env.example /curriki/trax-lrs/.env",
             "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/trax-lrs/.env",
             "sed -i \"s/substitute-terraform-trax-domain.com/${var.lrs_site}/g\" /curriki/trax-lrs/.env",
-            "sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/trax-lrs/.env",
+            #"sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/trax-lrs/.env",
             "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/trax-lrs/.env",
             "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/trax-lrs/.env",
             "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/trax-lrs/.env",
@@ -252,7 +252,7 @@ resource "null_resource" "studio-script" {
             "cp /curriki/tsugi/tsugi-main-config.example.php /curriki/tsugi/config.php",
             "cp /curriki/tsugi/mod/curriki/tsugi-curriki-config.php /curriki/tsugi/mod/curriki/config.php",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/tsugi/config.php",
-            "sed -i 's/substitute-mysql-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/tsugi/config.php",
+            #"sed -i 's/substitute-mysql-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/tsugi/config.php",
            "sed -i 's/substitute-mysql-db-port/${var.mysql_port}/g' /curriki/tsugi/config.php",
            "sed -i 's/substitute-tsugi-db-dbname/${var.tsugi_database}/g' /curriki/tsugi/config.php",
            "sed -i 's/substitute-mysql-db-user/${var.mysql_user}/g' /curriki/tsugi/config.php",
@@ -262,6 +262,7 @@ resource "null_resource" "studio-script" {
 
 
             #Installing
+            "sudo docker swarm leave --force",
             "sudo docker swarm init",
             "sudo docker stack deploy --compose-file /curriki/docker-compose.yml currikistack",
             " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ')",
