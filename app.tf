@@ -28,9 +28,13 @@ resource "oci_core_instance" "oracle_instance" {
         subnet_id = local.use_existing_network ? var.subnet_id : oci_core_subnet.curriki_subnet[0].id
         nsg_ids                = [oci_core_network_security_group.app_nsg.id]
     }
-    extended_metadata = {
+    metadata = {
+      ssh_authorized_keys = var.ssh_public_key
       ssh_authorized_keys = tls_private_key.public_private_key_pair.public_key_openssh
     }
+    # extended_metadata = {
+      
+    # }
     preserve_boot_volume = false
 }
 
@@ -183,6 +187,10 @@ resource "null_resource" "studio-script" {
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/ssl.conf",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/ssl.conf",
             "sed -i 's/substitute-terraform-trax-domain.com/${var.lrs_site}/g' /curriki/ssl.conf",
+
+            #.env
+            "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/.env",
+            "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/.env",
 
             # API
             "cp /curriki/api/.env.example /curriki/api/.env",
