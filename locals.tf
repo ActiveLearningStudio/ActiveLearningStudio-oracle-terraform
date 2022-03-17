@@ -14,8 +14,6 @@ locals {
 
   # Logic to choose a custom image or a marketplace image.
   app_custom_image_id = var.mp_app_subscription_enabled ? var.mp_listing_resource_app_id : var.app_custom_image_id
-  db_custom_image_id = var.mp_db_subscription_enabled ? var.mp_listing_resource_db_id : var.db_custom_image_id
-  es_custom_image_id = var.mp_es_subscription_enabled ? var.mp_listing_resource_es_id : var.es_custom_image_id
 
   # Local to control subscription to Marketplace image.
   mp_app_subscription_enabled = var.mp_app_subscription_enabled ? 1 : 0

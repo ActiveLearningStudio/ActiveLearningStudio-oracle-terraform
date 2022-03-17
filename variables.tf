@@ -89,17 +89,10 @@ variable "mp_es_listing_resource_version" {
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaa52frxos5gexyxtacwire53uhvfifqd2iqv5tztxgzp47bua5bswa"
+  default     = "ocid1.image.oc1.iad.aaaaaaaaiizpeiw7uupybhrr6jfrj422ltvamisg75ixyaynxtaigrogglaa"
   description = "APP Image OCID"
 }
-variable "db_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaawlf3e7vqyrpfdf6ceflcusfe5idzc6ymsaf7pjsx3bnuzhigdwsq"
-  description = "DB Image OCID"
-}
-variable "es_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaagyv764zjtiwzfke7mrrqtv73j2dpeq26ciknq44zq44tqtvwisca"
-  description = "Elastic Search Image OCID"
-}
+
 
 ############################
 #  Compute Configuration   #
@@ -292,22 +285,17 @@ variable "nsg_config_enum" {
 variable "main_site" {
   description = "Main Site URL (Must not start with http or https)"
   type = string
-  default = "oracle.example.com"
-}
-variable "admin_site" {
-  description = "Admin Site URL (Must not start with http or https)"
-  type = string
-  default = "oracle-admin.example.com"
+  default = "oracle.curriki.org"
 }
 variable "tsugi_site" {
   description = "Tsugi Site URL (Must not start with http or https)"
   type = string
-  default = "oracle-tsugi.example.com"
+  default = "oracle-tsugi.curriki.org"
 }
 variable "lrs_site" {
   description = "LRS Site URL (Must not start with http or https)"
   type = string
-  default = "oracle-trax.example.com"
+  default = "oracle-trax.curriki.org"
 }
 
 
@@ -332,7 +320,7 @@ variable "tsugi_database" {
   default = "tsugi_database"
 }
 variable "tsugi_admin_password" {
-  description = "Admin Password for tsugi (Login with https://oracle-tsugi.example.com)"
+  description = "Admin Password for tsugi (Login with https://oracle-tsugi.curriki.org)"
   type = string
   default = "tsugi_admin_password"
 }
@@ -386,7 +374,7 @@ variable "postgres_lrs_db" {
 variable "pgadmin_email" {
   description = "PGAdmin Email"
   type = string
-  default = "admin@example.com"
+  default = "admin@curriki.org"
 }
 variable "pgadmin_password" {
   description = "PGAdmin Password"

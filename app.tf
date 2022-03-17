@@ -162,36 +162,30 @@ resource "null_resource" "studio-script" {
          inline = [
              # Lets Encrypt
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/init-letsencrypt.sh",
-            "sed -i 's/substitute-terraform-admin-domain.com/${var.admin_site}/g' /curriki/init-letsencrypt.sh",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/init-letsencrypt.sh",
             "sed -i 's/substitute-terraform-trax-domain.com/${var.lrs_site}/g' /curriki/init-letsencrypt.sh",
             
              # Lets Encrypt
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/init-generate-ssl.sh",
-            "sed -i 's/substitute-terraform-admin-domain.com/${var.admin_site}/g' /curriki/init-generate-ssl.sh",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/init-generate-ssl.sh",
             "sed -i 's/substitute-terraform-trax-domain.com/${var.lrs_site}/g' /curriki/init-generate-ssl.sh",
             
             # nginx
 
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
-            "sed -i 's/substitute-terraform-admin-domain.com/${var.admin_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
             "sed -i 's/substitute-terraform-trax-domain.com/${var.lrs_site}/g' /curriki/data/nginx/certbot-conf/app.conf",
 
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/data/nginx/prod-conf/app.conf",
-            "sed -i 's/substitute-terraform-admin-domain.com/${var.admin_site}/g' /curriki/data/nginx/prod-conf/app.conf",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/data/nginx/prod-conf/app.conf",
             "sed -i 's/substitute-terraform-trax-domain.com/${var.lrs_site}/g' /curriki/data/nginx/prod-conf/app.conf",
 
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/ssl.conf",
-            "sed -i 's/substitute-terraform-admin-domain.com/${var.admin_site}/g' /curriki/ssl.conf",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/ssl.conf",
             "sed -i 's/substitute-terraform-trax-domain.com/${var.lrs_site}/g' /curriki/ssl.conf",
 
             # API
             "cp /curriki/api/.env.example /curriki/api/.env",
-            "cp /curriki/api/laravel-echo-server-https-example.json /curriki/api/laravel-echo-server.json",
             "echo $(tr -dc A-Za-z0-9 </dev/urandom | head -c 32 ; echo '' ) > /curriki/.appkey",
             "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/api/.env",
             
@@ -226,12 +220,7 @@ resource "null_resource" "studio-script" {
             "sed -i \"s/substitute-react-app-h5p-key/B6TFsmFD5TLZaWCAYZ91ly0D2We0xjLAtRmBJzQ/g\" /curriki/client/.env.local",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/client/.env.local",
 
-            # Admin
-            "cp /curriki/admin/.env.example /curriki/admin/.env",
-            "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/admin/.env",
-            "sed -i \"s/substitute-terraform-admin-domain.com/${var.admin_site}/g\" /curriki/admin/.env",
-            "sed -i \"s/substitute-terraform-domain.com/${var.main_site}/g\" /curriki/admin/.env",
-            
+            "cp /curriki/client/.env.local /curriki/client/.env",
             
 
             # Trax
@@ -262,9 +251,10 @@ resource "null_resource" "studio-script" {
 
 
             #Installing
-            "sudo docker swarm leave --force",
+         
             "sudo docker swarm init",
-            "sudo docker stack deploy --compose-file /curriki/docker-compose.yml currikistack",
+            "set -a && source /curriki/.env",
+            "sudo -E docker stack deploy --compose-file /curriki/docker-compose.yml currikistack",
             " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ')",
             " while [ \"$up\" != \"1/1\" ] ",
             " do ",

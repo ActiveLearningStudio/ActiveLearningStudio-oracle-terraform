@@ -42,8 +42,6 @@ variableGroups:
       - subnet_type_enum
       - nsg_config_enum
       - app_custom_image_id
-      - db_custom_image_id
-      - es_custom_image_id
       - marketplace_source_images
       - react_app_pexel_api
 
@@ -110,7 +108,6 @@ variableGroups:
   - title: "Site URL Settings"
     variables:
       - main_site
-      - admin_site
       - tsugi_site
       - lrs_site
 
@@ -250,22 +247,7 @@ variables:
     #   eq:
     #     - mp_subscription_enabled
     #     - false
-  db_custom_image_id:
-    type: string
-    required: true
-    title: Custom Image DB OCID
-    # visible:
-    #   eq:
-    #     - mp_subscription_enabled
-    #     - false
-  es_custom_image_id:
-    type: string
-    required: true
-    title: Custom Image ES OCID
-    # visible:
-    #   eq:
-    #     - mp_subscription_enabled
-    #     - false
+  
 
   tag_key_name:
     type: string
@@ -569,11 +551,6 @@ variables:
     title: Main Site
     description: Main Site URL
   
-  admin_site:
-    type: string
-    required: true
-    title: Admin Site
-    description: Admin Site URL
   
   tsugi_site:
     type: string
