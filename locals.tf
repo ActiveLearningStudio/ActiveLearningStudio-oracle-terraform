@@ -17,19 +17,11 @@ locals {
 
   # Local to control subscription to Marketplace image.
   mp_app_subscription_enabled = var.mp_app_subscription_enabled ? 1 : 0
-  mp_db_subscription_enabled = var.mp_db_subscription_enabled ? 1 : 0
-  mp_es_subscription_enabled = var.mp_es_subscription_enabled ? 1 : 0
 
   # Marketplace Image listing variables - required for subscription only
   listing_app_id               = var.mp_app_listing_id
-  listing_db_id               = var.mp_db_listing_id
-  listing_es_id               = var.mp_es_listing_id
   listing_resource_app_id      = var.mp_listing_resource_app_id
-  listing_resource_db_id      = var.mp_listing_resource_db_id
-  listing_resource_es_id      = var.mp_listing_resource_es_id
   listing_app_resource_version = var.mp_app_listing_resource_version
-  listing_db_resource_version = var.mp_db_listing_resource_version
-  listing_es_resource_version = var.mp_es_listing_resource_version
 
   
   is_flex_shape = var.vm_compute_shape == "VM.Standard.E3.Flex" ? [var.vm_flex_shape_ocpus]:[]

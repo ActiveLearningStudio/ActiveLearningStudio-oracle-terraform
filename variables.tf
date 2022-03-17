@@ -19,34 +19,11 @@ variable "mp_app_subscription_enabled" {
   default     = true
 }
 
-variable "mp_db_subscription_enabled" {
-  description = "Subscribe to Marketplace listing DB?"
-  type        = bool
-  default     = true
-}
-
-variable "mp_es_subscription_enabled" {
-  description = "Subscribe to Marketplace listing ES?"
-  type        = bool
-  default     = true
-}
 
 variable "mp_app_listing_id" {
   // default = "ocid1.appcataloglisting.oc1.."
   default     = "ocid1.appcataloglisting.oc1..aaaaaaaagwlhiykamroczsyg7rfmlbvooukzzktbuwjmrfhsvj4n6aicvi2a"
   description = "Marketplace Listing OCID APP"
-}
-variable "mp_db_listing_id" {
-  // default = "ocid1.appcataloglisting.oc1.."
-  default     = "ocid1.appcataloglisting.oc1..aaaaaaaa4nhy27bmgtefpefbmj542y3exv3kjvasdauy6oqxgshqfxtt26bq"
-  description = "Marketplace Listing OCID DB"
-}
-
-// Fix this
-variable "mp_es_listing_id" {
-  // default = "ocid1.appcataloglisting.oc1.."
-  default     = "ocid1.appcataloglisting.oc1..aaaaaaaansir6c3sma3zrcnpdiqrcz4mj6egjakai55u2ttnjhleh7a5ccrq"
-  description = "Marketplace Listing OCID ES"
 }
 
 variable "mp_listing_resource_app_id" {
@@ -55,16 +32,6 @@ variable "mp_listing_resource_app_id" {
   description = "Marketplace Listing Image APP OCID"
 }
 
-variable "mp_listing_resource_db_id" {
-  // default = "ocid1.image.oc1.."
-  default     = "ocid1.image.oc1..aaaaaaaayj4cbyhgmgww4h55llswtt3mtgmzf7lhvsinio4grgvri3pcrkvq"
-  description = "Marketplace Listing Image DB OCID"
-}
-variable "mp_listing_resource_es_id" {
-  // default = "ocid1.image.oc1.."
-  default     = "ocid1.image.oc1..aaaaaaaaxy6uy3oab2q5pc4fjhzineeesmgcyvba265xabmkx2tqou73x4dq"
-  description = "Marketplace Listing Image ES OCID"
-}
 
 variable "mp_app_listing_resource_version" {
   // default = "1.0"
@@ -73,23 +40,12 @@ variable "mp_app_listing_resource_version" {
 }
 
 
-variable "mp_db_listing_resource_version" {
-  // default = "1.0"
-  default     = "v1.0.0"
-  description = "Marketplace Listing Package/Resource Version DB"
-}
-
-variable "mp_es_listing_resource_version" {
-  // default = "1.0"
-  default     = "v1.0.0"
-  description = "Marketplace Listing Package/Resource Version ES"
-}
 
 ############################
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaaiizpeiw7uupybhrr6jfrj422ltvamisg75ixyaynxtaigrogglaa"
+  default     = "ocid1.image.oc1.iad.aaaaaaaarl4hnivcq6uaw5jd757xh5i2fudq572ekupmitfh5i3g2dnnyija"
   description = "APP Image OCID"
 }
 
@@ -171,12 +127,7 @@ variable "subnet_type" {
 variable "subnet_id" {
   default = ""
 }
-variable "db_subnet_id" {
-  default = ""
-}
-variable "es_subnet_id" {
-  default = ""
-}
+
 
 
 variable "subnet_display_name" {
@@ -187,15 +138,6 @@ variable "subnet_display_name" {
 variable "subnet_cidr_block" {
   description = "Subnet CIDR"
   default     = "10.0.0.0/24"
-}
-
-variable "db_subnet_cidr_block" {
-  description = "DB Subnet CIDR"
-  default     = "10.0.1.0/24"
-}
-variable "es_subnet_cidr_block" {
-  description = "ES Subnet CIDR"
-  default     = "10.0.2.0/24"
 }
 
 variable "subnet_dns_label" {

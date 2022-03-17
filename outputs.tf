@@ -5,12 +5,7 @@
 output "app_instance_ip" {
   value = oci_core_public_ip.ReservedAppPublicIP.ip_address
 }
-/**output "db_instance_ip" {
-  value = oci_core_public_ip.ReservedDBPublicIP.ip_address
-} */
-/**output "es_instance_ip" {
-  value = oci_core_public_ip.ReservedESPublicIP.ip_address
-} */
+
 
 ###
 # network.tf outputs
@@ -40,9 +35,3 @@ output "app_subscription" {
   value = data.oci_core_app_catalog_subscriptions.mp_app_image_subscription.*.app_catalog_subscriptions
 }
 
-output "db_subscription" {
-  value = data.oci_core_app_catalog_subscriptions.mp_db_image_subscription.*.app_catalog_subscriptions
-}
-output "es_subscription" {
-  value = data.oci_core_app_catalog_subscriptions.mp_es_image_subscription.*.app_catalog_subscriptions
-}
