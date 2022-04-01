@@ -21,7 +21,7 @@ resource "oci_core_instance" "oracle_instance" {
     # public_ip = oci_core_public_ip.test_public_ip
 
     # Optional
-    display_name = "Market Test App"
+    display_name = "CurrikiStudio"
     create_vnic_details {
         assign_public_ip = false
         display_name = "studiovnic"
@@ -137,7 +137,8 @@ resource "oci_core_volume_attachment" "app_volume_attachment" {
       "export UUID=$(sudo /usr/sbin/blkid -s UUID -o value /dev/disk/by-path/$${DEVICE_ID}-part1)",
       "echo 'UUID='$${UUID}' /curriki/api/storage xfs defaults,_netdev,nofail 0 2' | sudo tee -a /etc/fstab",
       "sudo mount -a",
-      "sudo unzip -o /curriki/storage.zip -d /curriki/api/storage/",
+      # "sudo unzip -o /curriki/storage.zip -d /curriki/api/storage/",
+      "sudo cp -r /curriki/api/storagetoclone/* -d /curriki/api/storage/",
       "sudo chmod 777 -R /curriki/api/storage/"
     ]
   }
@@ -164,6 +165,31 @@ resource "null_resource" "studio-script" {
      depends_on = [ oci_core_instance.oracle_instance, oci_core_volume_attachment.app_volume_attachment ]
      provisioner "remote-exec" {
          inline = [
+            # Database
+
+            "sed -i 's/substitute-mysql-database/${var.tsugi_database}/g' /curriki/.env.example",
+           "sed -i 's/substitute-mysql-user/${var.mysql_user}/g' /curriki/.env.example",
+           "sed -i 's/substitute-mysql-password/${var.mysql_password}/g' /curriki/.env.example",
+           "sed -i 's/substitute-mysql-root-password/${var.mysql_root_password}/g' /curriki/.env.example",
+           "sed -i 's/substitute-mysql-local-port/${var.mysql_port}/g' /curriki/.env.example",
+          #  "sed -i 's/substitute-local-db-ip-address/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/.env.example",
+          #  "sed -i 's/substitute-pgadmin-default-email/${var.pgadmin_email}/g' /curriki/.env.example",
+          #  "sed -i 's/substitute-pgadmin-default-password/${var.pgadmin_password}/g' /curriki/.env.example",
+           "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/.env.example",
+           "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/.env.example",
+           "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/.env.example",
+           "sed -i 's/substitute-postgres-exposed-port/${var.postges_port}/g' /curriki/.env.example",
+          #  "sed -i 's/substitute-pgadmin-exposed-port/${var.pgadmin_port}/g' /curriki/.env.example",
+          #  "sed -i 's/substitute-phpmyadmin-exposed-port/${var.phpmyadmin_port}/g' /curriki/.env.example",
+           "sed -i 's/substitute-postgres-database/${var.postgres_lrs_db}/g' /curriki/postgresscripts/traxdb.sql",
+            "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/postgresscripts/db-update-creds.sql",
+            "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/postgresscripts/db-update-creds.sql",
+            "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/db-update-creds.sh",
+            "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/db-update-creds.sh",
+            "cp /curriki/.env.example /curriki/.env",
+            
+            
+           
              # Lets Encrypt
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/init-letsencrypt.sh",
             "sed -i 's/substitute-terraform-tsugi-domain.com/${var.tsugi_site}/g' /curriki/init-letsencrypt.sh",
@@ -198,10 +224,10 @@ resource "null_resource" "studio-script" {
             "sed -i \"s/substitute-app-key/$(cat /curriki/.appkey)/g\" /curriki/api/.env",
             
             "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/api/.env",
-            #"sed -i 's/substitute-postgres-db-host/${oci_core_public_ip.ReservedDBPublicIP.ip_address}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-db-host/currikiprod-postgres/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-user/${var.postgres_user}/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-password/${var.postgres_password}/g' /curriki/api/.env",
-            "sed -i 's/substitute-postgres-port/${var.postges_port}/g' /curriki/api/.env",
+            "sed -i 's/substitute-postgres-port/5432/g' /curriki/api/.env",
             "sed -i 's/substitute-postgres-db/${var.postgres_db}/g' /curriki/api/.env",
             "sed -i 's/substitute-lrs-db-database/${var.postgres_lrs_db}/g' /curriki/api/.env",
             #"sed -i 's/substitute-elastic-host/${oci_core_public_ip.ReservedESPublicIP.ip_address}/g' /curriki/api/.env",
@@ -214,9 +240,6 @@ resource "null_resource" "studio-script" {
             "sed -i 's/substitute-lrs-username/testsuite/g' /curriki/api/.env",
             "sed -i 's/substitute-lrs-password/password/g' /curriki/api/.env",
             
-            
-
-            "sed -i 's/substitute-terraform-domain.com/${var.main_site}/g' /curriki/api/laravel-echo-server.json",
             
 
             
@@ -272,6 +295,12 @@ resource "null_resource" "studio-script" {
               " up=$(sudo docker service ls | grep currikiprod-nginx | awk ' { print $4 } ') ",
             " done ",
 
+            
+            "sudo chmod +x /curriki/db-update-creds.sh",
+            # "sudo chown -R 5050:5050 /mnt/DBData/pgadmin1-data/",
+            # "cd /curriki && sudo docker-compose up --force-recreate -d",
+            # "sleep 60",
+            "sudo sh /curriki/db-update-creds.sh",
             #Removing temporary public key
             # "KEYWORD=${tls_private_key.public_private_key_pair.public_key_openssh}",
             # "ESCAPED_KEYWORD=$(printf '%s\n' \"$KEYWORD\" | sed -e 's/[]\\/$*.^[]/\\&/g');",

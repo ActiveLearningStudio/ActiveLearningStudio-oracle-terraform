@@ -1,7 +1,7 @@
 # Title shown in Application Information tab.
 title: CurrikiStudio Marketplace Stack
 # Sub Title shown in Application Information tab.
-description: This stack launches Application, Database and ElasticSearch instances for CurrikiStudio - Free and open technology to create interactive learning experiences
+description: This stack launches Application instance for CurrikiStudio - Free and open technology to create interactive learning experiences
 schemaVersion: 1.0.0
 version: "20210528"
 
@@ -26,17 +26,9 @@ variableGroups:
       - tenancy_ocid
       - region
       - mp_app_listing_id
-      - mp_db_listing_id
-      - mp_es_listing_id
       - mp_listing_resource_app_id
-      - mp_listing_resource_db_id
-      - mp_listing_resource_es_id
       - mp_app_listing_resource_version
-      - mp_db_listing_resource_version
-      - mp_es_listing_resource_version
       - mp_app_subscription_enabled
-      - mp_db_subscription_enabled
-      - mp_es_subscription_enabled
       - availability_domain_number
       - network_strategy_enum
       - subnet_type_enum
@@ -78,13 +70,9 @@ variableGroups:
     variables:
       - subnet_type
       - subnet_id
-      - db_subnet_id
-      - es_subnet_id
       - subnet_display_name
       - subnet_dns_label
       - subnet_cidr_block
-      - db_subnet_cidr_block
-      - es_subnet_cidr_block
       - nsg_configuration_strategy
 
   - title: "Network Security Group"
@@ -121,9 +109,6 @@ variableGroups:
       - mysql_port
       - phpmyadmin_port
   
-  - title: "ElasticSearch Settings"
-    variables:
-      - elastic_password
   
   - title: "Postgres Database Settings"
     variables:
@@ -178,16 +163,7 @@ variables:
     required: true
     description: Marketplace Listing APP ID
 
-  mp_db_listing_id:
-    type: string
-    required: true
-    description: Marketplace Listing DB ID
-
-  mp_es_listing_id:
-    type: string
-    required: true
-    description: Marketplace Listing ElasticSearch ID
-
+  
   mp_listing_resource_app_id:
     type: oci:core:image:id
     required: true
@@ -195,46 +171,14 @@ variables:
     dependsOn:
       compartmentId: compartment_ocid
 
-  mp_listing_resource_db_id:
-    type: oci:core:image:id
-    required: true
-    description: Marketplace Image DB OCID
-    dependsOn:
-      compartmentId: compartment_ocid
-
-  mp_listing_resource_es_id:
-    type: oci:core:image:id
-    required: true
-    description: Marketplace Image ES OCID
-    dependsOn:
-      compartmentId: compartment_ocid
-
+ 
   mp_app_listing_resource_version:
     type: string
     required: true
     description: Marketplace Listing package version App
 
-  mp_db_listing_resource_version:
-    type: string
-    required: true
-    description: Marketplace Listing package version DB
-
-  mp_es_listing_resource_version:
-    type: string
-    required: true
-    description: Marketplace Listing package version ElasticSearch
 
   mp_app_subscription_enabled:
-    type: boolean
-    title: Use Marketplace Image?
-    default: true
-
-  mp_db_subscription_enabled:
-    type: boolean
-    title: Use Marketplace Image?
-    default: true
-
-  mp_es_subscription_enabled:
     type: boolean
     title: Use Marketplace Image?
     default: true
@@ -460,33 +404,8 @@ variables:
     required: true
     title: Existing Subnet
     description: An existing Management subnet. This subnet must already be present in the chosen VCN.
-  db_subnet_id:
-    visible: #($network_strategy  == "Use Existing VCN and Subnet")
-      eq:
-        - network_strategy
-        - "Use Existing VCN and Subnet"
-    type: oci:core:subnet:id
-    dependsOn:
-      vcnId: vcn_id
-      compartmentId: compartment_ocid
-    default: ''
-    required: true
-    title: DB Existing Subnet
-    description: An existing Management subnet. This subnet must already be present in the chosen VCN.
 
-  es_subnet_id:
-    visible: #($network_strategy  == "Use Existing VCN and Subnet")
-      eq:
-        - network_strategy
-        - "Use Existing VCN and Subnet"
-    type: oci:core:subnet:id
-    dependsOn:
-      vcnId: vcn_id
-      compartmentId: compartment_ocid
-    default: ''
-    required: true
-    title: Elastic Existing Subnet
-    description: An existing Management subnet. This subnet must already be present in the chosen VCN.
+
 
   subnet_dns_label:
     visible: #($network_strategy  == ""Create New VCN and Subnet"")
@@ -605,12 +524,6 @@ variables:
     required: true
     title: PhpMyAdmin Port
     description: PhpMyAdmin Port
-
-  elastic_password:
-    type: string
-    required: true
-    title: ElasticSearch Password
-    description: ElasticSearch Password
 
   postgres_user:
     type: string

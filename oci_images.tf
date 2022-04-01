@@ -15,19 +15,5 @@ variable "marketplace_source_images" {
       is_pricing_associated = false
      compatible_shapes = ["VM.Standard2.2", "VM.Standard2.4", "VM.Standard2.8", "VM.Standard2.16", "VM.Standard.E3.Flex", "VM.Standard.E4.Flex"]
     }
-    
-    ## Curriki DB Image OCID Details
-    supporting_image = {
-     ocid = "ocid1.image.oc1..aaaaaaaayj4cbyhgmgww4h55llswtt3mtgmzf7lhvsinio4grgvri3pcrkvq"
-     is_pricing_associated = false
-     compatible_shapes = ["VM.Standard2.2", "VM.Standard2.4", "VM.Standard2.8", "VM.Standard2.16", "VM.Standard.E3.Flex", "VM.Standard.E4.Flex"]
-    }
-
-    ## Curriki ElasticSearch Image OCID Details
-    supporting_image = {
-     ocid = "ocid1.image.oc1..aaaaaaaaxy6uy3oab2q5pc4fjhzineeesmgcyvba265xabmkx2tqou73x4dq"
-     is_pricing_associated = false
-     compatible_shapes = ["VM.Standard2.2", "VM.Standard2.4", "VM.Standard2.8", "VM.Standard2.16", "VM.Standard.E3.Flex", "VM.Standard.E4.Flex"]
-    }
   }
 }

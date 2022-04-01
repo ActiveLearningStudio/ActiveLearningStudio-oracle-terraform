@@ -45,7 +45,7 @@ variable "mp_app_listing_resource_version" {
 #  Custom Image           #
 ############################
 variable "app_custom_image_id" {
-  default     = "ocid1.image.oc1.iad.aaaaaaaa4lddjnybp32wzwsfukem5fnpfniszjbrww7vu6x7svevlcsejtnq"
+  default     = "ocid1.image.oc1.iad.aaaaaaaa2cdn2tisvokgzvayu3nxhx63tcei6jtfmiubxjbozpa5b6h22jda"
   description = "APP Image OCID"
 }
 
